@@ -1,1 +1,1 @@
-include ':CarlsbergClient'
+include ':CarlsbergClient', ':CommonLibrary'
