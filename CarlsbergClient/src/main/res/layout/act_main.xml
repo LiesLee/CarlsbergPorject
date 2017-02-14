@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".module.common.ui.activity.MainActivity">
+
+    <com.views.NonSwipeableViewPager
+        android:id="@+id/vp_main"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <View
+        android:background="#f2f2f2"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+    <RadioGroup
+        android:id="@+id/rg_main"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:checked="true"
+            android:button="@null"
+            android:gravity="center_horizontal"
+            android:drawableTop="@drawable/selector_tap_home"
+            android:text="首页"
+            android:textColor="@color/selector_home_tap_text"
+            android:textSize="10dp"
+            android:drawablePadding="4dp"
+            android:padding="5dp"/>
+
+        <RadioButton
+            android:id="@+id/rb_find"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:text="今日拜访"
+            android:textSize="10dp"
+            android:drawablePadding="4dp"
+            android:checked="false"
+            android:textColor="@color/selector_home_tap_text"
+            android:padding="5dp"
+            android:gravity="center"
+            android:drawableTop="@drawable/selector_tap_order"/>
+
+        <RadioButton
+            android:id="@+id/rb_person"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:textSize="10dp"
+            android:drawablePadding="4dp"
+            android:textColor="@color/selector_home_tap_text"
+            android:padding="5dp"
+            android:gravity="center"
+            android:text="我的"
+            android:drawableTop="@drawable/selector_tap_my" />
+
+    </RadioGroup>
+
+</LinearLayout>

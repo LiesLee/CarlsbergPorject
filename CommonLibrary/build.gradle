@@ -14,8 +14,6 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 23
-        renderscriptTargetApi 19
-        renderscriptSupportModeEnabled true    // Enable RS support
     }
 
 
