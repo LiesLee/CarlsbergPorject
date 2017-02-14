@@ -138,13 +138,13 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         if (mPresenter != null) {
             mPresenter.onResume();
         }
-        MobclickAgent.onResume(this);
+        //MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
+        //MobclickAgent.onPause(this);
     }
 
     @Override

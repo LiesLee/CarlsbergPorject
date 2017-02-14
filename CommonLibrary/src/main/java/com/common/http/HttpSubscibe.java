@@ -8,11 +8,8 @@ import com.common.base.ui.BaseView;
 import com.common.callback.RequestCallback;
 import com.common.utils.NetUtil;
 import com.socks.library.KLog;
-import com.umeng.analytics.MobclickAgent;
 
 import java.net.SocketTimeoutException;
-import java.util.LinkedList;
-
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.Scheduler;
@@ -98,7 +95,7 @@ public class HttpSubscibe {
                             } catch (Exception e) {
                                 Log.e("requestCallback", "数据回调后处理错误: " + e.toString());
                                 e.printStackTrace();
-                                MobclickAgent.reportError(context, e);
+                                //MobclickAgent.reportError(context, e);
                                 requestCallback.requestError(0, "数据回调后处理错误");
                             }
                         }

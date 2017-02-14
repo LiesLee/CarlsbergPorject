@@ -1,7 +1,9 @@
-package com.carlsberg.app;
+package com.carlsberg.app.module.common.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.carlsberg.app.R;
 
 public class MainActivity extends AppCompatActivity {
 
