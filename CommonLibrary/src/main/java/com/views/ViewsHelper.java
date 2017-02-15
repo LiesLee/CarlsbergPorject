@@ -20,6 +20,7 @@ import com.gun0912.tedpicker.R;
 import com.views.util.ViewUtil;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.header.MaterialHeader;
 import in.srain.cube.views.ptr.header.StoreHouseHeader;
 
 /**
@@ -49,6 +50,33 @@ public class ViewsHelper {
         ptrFrameLayout.setDurationToCloseHeader(800);
         ptrFrameLayout.setHeaderView(header);
         ptrFrameLayout.addPtrUIHandler(header);
+        // default is false
+        ptrFrameLayout.setPullToRefresh(false);
+        // default is true
+        ptrFrameLayout.setKeepHeaderWhenRefresh(true);
+    }
+    /**
+     * 初始化Material风格下拉刷新控件默认参数
+     * @param context
+     * @param ptrFrameLayout
+     */
+    public static void init_PTR_Material_params(Context context, PtrFrameLayout ptrFrameLayout){
+        // header
+        MaterialHeader header = new MaterialHeader(context);
+        int[] colors = context.getResources().getIntArray(R.array.google_colors);
+        header.setColorSchemeColors(colors);
+        header.setLayoutParams(new PtrFrameLayout.LayoutParams(-1, -2));
+        header.setPadding(0, ViewUtil.dp2px(context,10), 0, ViewUtil.dp2px(context,10));
+        header.setPtrFrameLayout(ptrFrameLayout);
+
+        ptrFrameLayout.setResistance(1.7f);
+        ptrFrameLayout.setRatioOfHeaderHeightToRefresh(1.2f);
+        ptrFrameLayout.setDurationToClose(200);
+        ptrFrameLayout.setDurationToCloseHeader(800);
+        ptrFrameLayout.setHeaderView(header);
+        ptrFrameLayout.addPtrUIHandler(header);
+        //是否不等动画返回可继续下拉刷新
+        ptrFrameLayout.setEnabledNextPtrAtOnce(false);
         // default is false
         ptrFrameLayout.setPullToRefresh(false);
         // default is true

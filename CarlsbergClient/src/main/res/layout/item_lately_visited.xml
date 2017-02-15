@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <View
+        android:background="#f2f2f2"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+    <RelativeLayout
+        android:paddingBottom="18dp"
+        android:paddingTop="18dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--<com.views.CircleImageView-->
+            <!--android:id="@+id/iv_user_portrait"-->
+            <!--android:src="@mipmap/img_default"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp" />-->
+
+        <LinearLayout
+            android:id="@+id/ll_name_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:text="加载中..."
+                android:textSize="16dp"
+                android:textColor="#333333"
+                android:maxWidth="250dp"
+                android:layout_width="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:textSize="15dp"
+                android:text="内"
+                android:paddingRight="2dp"
+                android:paddingLeft="2dp"
+                android:layout_marginLeft="5dp"
+                android:background="@color/red"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:text="加载中..."
+                android:textSize="16dp"
+                android:gravity="end|right"
+                android:layout_weight="1"
+                android:textColor="@color/red"
+                android:layout_width="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:text="加载中..."
+            android:textSize="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/ll_name_layout"
+            android:layout_alignLeft="@+id/ll_name_layout"
+            android:textColor="@color/grey"
+            android:layout_width="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:text="加载中..."
+            android:textSize="12dp"
+            android:layout_below="@+id/ll_name_layout"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/grey"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

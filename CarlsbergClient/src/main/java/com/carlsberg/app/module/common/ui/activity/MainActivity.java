@@ -22,7 +22,6 @@ import com.common.base.ui.BaseActivity;
 import com.common.base.ui.BaseFragment;
 import com.common.base.ui.BaseView;
 import com.views.NonSwipeableViewPager;
-import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.util.ArrayList;
 import java.util.List;

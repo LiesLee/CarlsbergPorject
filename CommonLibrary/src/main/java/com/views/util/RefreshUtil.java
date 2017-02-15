@@ -43,6 +43,28 @@ public class RefreshUtil {
     }
 
     /**
+     * 初始化
+     * @param context
+     * @param ptrFrameLayout
+     * @param refreshListener
+     */
+    public static void init_material_pull(Context context, PtrFrameLayout ptrFrameLayout , final PtrRefreshListener refreshListener){
+        ViewsHelper.init_PTR_Material_params(context, ptrFrameLayout);
+        ptrFrameLayout.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                refreshListener.OnRefresh(frame);
+            }
+        });
+        ptrFrameLayout.disableWhenHorizontalMove(true);
+    }
+
+    /**
      * 自动刷新
      * @param ptrFrameLayout
      */
