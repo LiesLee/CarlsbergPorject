@@ -15,6 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".module.common.ui.activity.LoginActivity" android:screenOrientation="portrait" />
+        <activity android:name=".module.home.ui.activity.ChangePasswordActivity" android:screenOrientation="portrait" />
     </application>
 
 </manifest>

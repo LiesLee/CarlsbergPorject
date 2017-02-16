@@ -78,7 +78,7 @@ dependencies {
     compile 'com.7heaven.widgets:segmentcontrol:1.16'
     compile 'com.zhy:flowlayout-lib:1.0.3'
     compile 'com.mikhaellopez:circularprogressbar:1.1.1'
-    compile 'cn.qqtheme.framework:WheelPicker:latest.release'
+    compile 'cn.qqtheme.framework:WheelPicker:1.4.3'
     compile('zlc.season:rxdownload:1.2.8') {
         transitive true
         //屏蔽已经加载的库
