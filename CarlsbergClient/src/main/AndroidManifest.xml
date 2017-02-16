@@ -17,7 +17,8 @@
         </activity>
 
         <activity android:name=".module.common.ui.activity.LoginActivity" android:screenOrientation="portrait" />
-        <activity android:name=".module.home.ui.activity.ChangePasswordActivity" android:screenOrientation="portrait" />
+        <activity android:name=".module.my.ui.activity.ChangePasswordActivity" android:screenOrientation="portrait" />
+        <activity android:name=".module.my.ui.activity.ModifyInfoActivity" android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.carlsberg.app.module.home.ui.activity;
+package com.carlsberg.app.module.my.ui.activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -16,9 +16,6 @@ import com.common.base.ui.BaseView;
 
 import butterknife.Bind;
 
-/**
- * Created by rrsh on 16/10/11.
- */
 
 @ActivityFragmentInject(contentViewId = R.layout.act_forget_pass, toolbarTitle = R.string.change_password)
 public class ChangePasswordActivity extends BaseActivity<BasePresenterImpl> implements BaseView {

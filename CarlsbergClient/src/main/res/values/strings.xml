@@ -4,4 +4,5 @@
     <string name="sign_key_release">69a8f8ae2f8cd4a455103a13a6d46b7b</string>
     <string name="api_ver">1.0</string>
     <string name="change_password">修改密码</string>
+    <string name="modify_user_info">个人资料</string>
 </resources>

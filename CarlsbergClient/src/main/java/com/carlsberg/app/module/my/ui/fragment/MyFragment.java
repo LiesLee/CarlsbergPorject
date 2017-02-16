@@ -7,7 +7,8 @@ import android.widget.TextView;
 
 import com.carlsberg.app.R;
 import com.carlsberg.app.module.common.ui.activity.LoginActivity;
-import com.carlsberg.app.module.home.ui.activity.ChangePasswordActivity;
+import com.carlsberg.app.module.my.ui.activity.ChangePasswordActivity;
+import com.carlsberg.app.module.my.ui.activity.ModifyInfoActivity;
 import com.common.annotation.ActivityFragmentInject;
 import com.common.base.presenter.BasePresenterImpl;
 import com.common.base.ui.BaseFragment;
@@ -41,6 +42,7 @@ public class MyFragment extends BaseFragment<BasePresenterImpl> implements BaseV
         ll_change_password.setOnClickListener(this);
         ll_about_us.setOnClickListener(this);
         tv_exit.setOnClickListener(this);
+        ll_modify_info.setOnClickListener(this);
     }
 
     @Override
@@ -61,7 +63,8 @@ public class MyFragment extends BaseFragment<BasePresenterImpl> implements BaseV
 
                 break;
             case R.id.ll_modify_info :
-
+                Intent intentU = new Intent(baseActivity, ModifyInfoActivity.class);
+                startActivityForResult(intentU, 999);
                 break;
             case R.id.tv_exit :
                 Intent intentE = new Intent(baseActivity, LoginActivity.class);
