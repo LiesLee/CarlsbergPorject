@@ -66,6 +66,7 @@ dependencies {
     compile 'in.srain.cube:ultra-ptr:1.0.11'
     compile 'com.android.support:cardview-v7:23.4.0'
     //加载更多封装的adapter
+
     //compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.1.4'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.3.3'
     compile 'me.relex:circleindicator:1.2.2@aar'
@@ -92,4 +93,5 @@ dependencies {
         exclude group: 'io.reactivex', module: 'rxandroid'
     }
     compile files('libs/MiPush_SDK_Client_3_2_1.jar')
+    compile project(':scrollable')
 }
