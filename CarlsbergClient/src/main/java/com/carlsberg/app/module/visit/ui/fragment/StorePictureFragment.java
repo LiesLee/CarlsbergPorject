@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.carlsberg.app.R;
 import com.carlsberg.app.module.home.ui.adapter.LatelyVisitedAdapter;
+import com.carlsberg.app.module.visit.ui.adapter.StorePicturesAdapter;
 import com.common.annotation.ActivityFragmentInject;
 import com.common.base.presenter.BasePresenterImpl;
 import com.common.base.ui.BaseFragment;
@@ -33,7 +34,9 @@ public class StorePictureFragment extends ScrollableBaseFragment<BasePresenterIm
 
     Handler handler;
     LinearLayoutManager mLinearLayoutManager;
-    LatelyVisitedAdapter mAdapter;
+
+    StorePicturesAdapter storePicturesAdapter;
+
 
     @Override
     protected void initView(View fragmentRootView) {
@@ -58,9 +61,8 @@ public class StorePictureFragment extends ScrollableBaseFragment<BasePresenterIm
 
         mLinearLayoutManager = new LinearLayoutManager(baseActivity);
         rv_list.setLayoutManager(mLinearLayoutManager);
-
-        mAdapter = new LatelyVisitedAdapter(baseActivity, null);
-        rv_list.setAdapter(mAdapter);
+        storePicturesAdapter = new StorePicturesAdapter(baseActivity, null);
+        rv_list.setAdapter(storePicturesAdapter);
 
 //        RefreshUtil.autoRefresh(pcfl_pull_to_refresh);
     }

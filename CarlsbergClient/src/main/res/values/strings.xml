@@ -5,4 +5,5 @@
     <string name="api_ver">1.0</string>
     <string name="change_password">修改密码</string>
     <string name="modify_user_info">个人资料</string>
+    <string name="choice_image">选择图片</string>
 </resources>
