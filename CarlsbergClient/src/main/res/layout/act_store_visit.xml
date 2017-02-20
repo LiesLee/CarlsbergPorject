@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:cube_ptr="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical">
+
+    <include layout="@layout/defaut_toolbar_white"/>
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:id="@+id/pcfl_pull_to_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/blue"
+        cube_ptr:ptr_duration_to_close="200"
+        cube_ptr:ptr_duration_to_close_header="1000"
+        cube_ptr:ptr_keep_header_when_refresh="true"
+        cube_ptr:ptr_pull_to_fresh="false"
+        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+        cube_ptr:ptr_resistance="1.7">
+
+
+        <ru.noties.scrollable.ScrollableLayout
+            android:id="@+id/scrollable_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:scrollable_autoMaxScroll="true"
+            app:scrollable_autoMaxScrollViewId="@+id/header"
+            app:scrollable_closeUpAnimationMillis="250"
+            app:scrollable_closeUpAnimatorInterpolator="@android:anim/accelerate_decelerate_interpolator"
+            app:scrollable_considerIdleMillis="125"
+            app:scrollable_defaultCloseUp="true"
+            app:scrollable_friction="0.075"
+            app:scrollable_scrollerFlywheel="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:background="@color/white"
+                    android:paddingRight="15dp"
+                    android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/ll_name_layout"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tv_name"
+                                android:text="加载中..."
+                                android:textSize="16dp"
+                                android:textColor="#333333"
+                                android:maxWidth="250dp"
+                                android:layout_width="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:id="@+id/tv_type"
+                                android:textSize="15dp"
+                                android:text="内"
+                                android:paddingRight="2dp"
+                                android:paddingLeft="2dp"
+                                android:layout_marginLeft="5dp"
+                                android:background="@color/red"
+                                android:textColor="@color/white"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:id="@+id/tv_status"
+                                android:text="加载中..."
+                                android:textSize="16dp"
+                                android:gravity="end|right"
+                                android:layout_weight="1"
+                                android:textColor="@color/red"
+                                android:layout_width="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+
+
+                    <ru.noties.scrollable.LinearListView
+                        android:id="@+id/ll_store_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <LinearLayout
+                        android:paddingTop="15dp"
+                        android:gravity="end|right"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:id="@+id/tv_sign_in"
+                            android:background="@drawable/shap_bg_blue_3"
+                            android:paddingTop="3dp"
+                            android:paddingBottom="3dp"
+                            android:paddingLeft="7dp"
+                            android:paddingRight="7dp"
+                            android:textColor="@color/white"
+                            android:text="入店签到"
+                            android:textSize="14dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                        <TextView
+                            android:id="@+id/tv_data_collect"
+                            android:background="@drawable/shap_bg_blue_3"
+                            android:paddingTop="3dp"
+                            android:paddingBottom="3dp"
+                            android:paddingLeft="7dp"
+                            android:paddingRight="7dp"
+                            android:textColor="@color/white"
+                            android:layout_marginLeft="10dp"
+                            android:text="数据收集"
+                            android:textSize="14dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:id="@+id/tv_clock_off"
+                            android:background="@drawable/shap_bg_blue_3"
+                            android:paddingTop="3dp"
+                            android:paddingBottom="3dp"
+                            android:paddingLeft="7dp"
+                            android:paddingRight="7dp"
+                            android:textColor="@color/white"
+                            android:layout_marginLeft="10dp"
+                            android:text="离店打卡"
+                            android:textSize="14dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                    </LinearLayout>
+
+
+
+
+                </LinearLayout>
+                <View
+                    android:background="@color/line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/white"
+                    app:tabSelectedTextColor="@color/blue"
+                    app:tabTextColor="@color/text_grey_light"
+                    />
+
+            </LinearLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/f2f2"
+                android:layout_marginTop="?attr/actionBarSize"/>
+
+        </ru.noties.scrollable.ScrollableLayout>
+
+
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
+
+
+
+</LinearLayout>

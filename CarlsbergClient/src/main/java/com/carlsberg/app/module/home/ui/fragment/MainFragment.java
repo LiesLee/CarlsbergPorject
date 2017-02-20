@@ -1,5 +1,6 @@
 package com.carlsberg.app.module.home.ui.fragment;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.carlsberg.app.R;
 import com.carlsberg.app.module.home.ui.adapter.LatelyVisitedAdapter;
+import com.carlsberg.app.module.visit.ui.activity.StoreVisitActivity;
 import com.common.annotation.ActivityFragmentInject;
 import com.common.base.presenter.BasePresenterImpl;
 import com.common.base.ui.BaseFragment;
@@ -76,10 +78,25 @@ public class MainFragment extends BaseFragment<BasePresenterImpl> implements Bas
         rv_list.setAdapter(mAdapter);
 
         RefreshUtil.autoRefresh(pcfl_pull_to_refresh);
+
+        iv_more.setOnClickListener(this);
     }
 
     @Override
     public void initData() {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        switch (view.getId()) {
+            case R.id.iv_more :
+                startActivity(new Intent(baseActivity, StoreVisitActivity.class));
+                break;
+
+            default:
+                break;
+        }
     }
 }
