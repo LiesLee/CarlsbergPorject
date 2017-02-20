@@ -1,25 +1,120 @@
 package com.carlsberg.app.module.visit.ui.fragment;
 
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.carlsberg.app.R;
+import com.carlsberg.app.bean.visit.RegionInfo;
+import com.carlsberg.app.module.visit.ui.adapter.VisitChildFragmentAdapter;
+import com.carlsberg.app.module.visit.ui.popup.SelectAreaPopup;
 import com.common.annotation.ActivityFragmentInject;
 import com.common.base.presenter.BasePresenterImpl;
+import com.common.base.ui.BaseActivity;
 import com.common.base.ui.BaseFragment;
 import com.common.base.ui.BaseView;
+import com.views.util.RefreshUtil;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import butterknife.Bind;
 
 /**
  * Created by LiesLee on 17/2/14.
  */
 @ActivityFragmentInject(contentViewId = R.layout.fra_visit)
 public class VisitFragment extends BaseFragment<BasePresenterImpl> implements BaseView {
+    @Bind(R.id.et_search)
+    EditText et_search;
+    @Bind(R.id.tv_area)
+    TextView tv_area;
+    @Bind(R.id.tabLayout)
+    TabLayout tabLayout;
+    @Bind(R.id.viewPager)
+    ViewPager viewPager;
+
+    private SelectAreaPopup popup;
+    private int mPagePosition;
+
+    VisitChildFragmentAdapter mAdapter;
+
     @Override
     protected void initView(View fragmentRootView) {
+
+        et_search.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    // 先隐藏键盘
+                    ((InputMethodManager) baseActivity.getSystemService(BaseActivity.INPUT_METHOD_SERVICE))
+                            .hideSoftInputFromWindow(baseActivity
+                                            .getCurrentFocus().getWindowToken(),
+                                    InputMethodManager.HIDE_NOT_ALWAYS);
+                    //接下来在这里做你自己想要做的事，实现自己的业务。
+
+                }
+
+                return false;
+            }
+        });
+
+        mAdapter = new VisitChildFragmentAdapter(getChildFragmentManager(), baseActivity);
+        List<VisitChildFragment> list = new ArrayList<>();
+        VisitChildFragment c1 = new VisitChildFragment();
+        VisitChildFragment c2 = new VisitChildFragment();
+        c1.setName("今日拜访");
+        c2.setName("最近拜访");
+        Collections.addAll(list, c1, c2);
+        mAdapter.setFragments(list);
+        viewPager.setAdapter(mAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+
+        tv_area.setOnClickListener(this);
+
 
     }
 
     @Override
     public void initData() {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        switch (view.getId()) {
+            case R.id.tv_area:
+                List<RegionInfo> list = new ArrayList<>();
+                RegionInfo re1 = new RegionInfo("1", "1");
+                RegionInfo re2 = new RegionInfo("2", "2");
+                RegionInfo re3 = new RegionInfo("3", "3");
+                list.add(re1);
+                list.add(re2);
+                list.add(re3);
+                popup = new SelectAreaPopup(baseActivity, new SelectAreaPopup.PopupCallBack() {
+                    @Override
+                    public void callback(String payeeId, String name) {
+                        if (mPagePosition == 0) {
+
+                        } else {
+
+                        }
+                    }
+                }, list);
+                popup.showAsDropDown(tv_area);
+                break;
+
+            default:
+                break;
+        }
     }
 }
