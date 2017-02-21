@@ -20,11 +20,13 @@ import java.util.List;
  */
 public class PublishDynamicImgsAdapter extends RecyclerView.Adapter<PublishDynamicImgsAdapter.Holder> {
 
+    private UIHelper.TakePictureSavePathCallBack callBack;
     ArrayList<Uri> imgs = new ArrayList<>();
     BaseActivity baseActivity;
 
-    public PublishDynamicImgsAdapter(BaseActivity baseActivity) {
+    public PublishDynamicImgsAdapter(BaseActivity baseActivity, UIHelper.TakePictureSavePathCallBack callBack) {
         this.baseActivity = baseActivity;
+        this.callBack = callBack;
     }
 
     @Override
@@ -33,13 +35,13 @@ public class PublishDynamicImgsAdapter extends RecyclerView.Adapter<PublishDynam
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, final int position) {
-        if(position == imgs.size()){
+    public void onBindViewHolder(final Holder holder, final int position) {
+        if(imgs.size() < 4 && position == imgs.size()){
             holder.iv_publish_dynamic_imgs.setImageResource(R.mipmap.icon_add_dynamic_imgs);
             holder.iv_publish_dynamic_imgs.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) { //选择图片
-                    UIHelper.getPictures(baseActivity, 9, imgs);
+                    UIHelper.takePicture(baseActivity, PublishDynamicImgsAdapter.this, callBack);
                 }
             });
             holder.iv_remove_imgs.setVisibility(View.GONE);
@@ -50,8 +52,7 @@ public class PublishDynamicImgsAdapter extends RecyclerView.Adapter<PublishDynam
             holder.iv_remove_imgs.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    imgs.remove(position);
-                    notifyDataSetChanged();
+                    callBack.onImgDelete(holder.getAdapterPosition(), PublishDynamicImgsAdapter.this);
                 }
             });
         }
@@ -59,9 +60,14 @@ public class PublishDynamicImgsAdapter extends RecyclerView.Adapter<PublishDynam
 
     @Override
     public int getItemCount() {
+
         int size = 1;
-        if(imgs != null && imgs.size() != 0){
-            size = size + imgs.size();
+        if(imgs != null){
+            if(imgs.size() >= 4){
+                size = imgs.size();
+            }else{
+                size = size + imgs.size();
+            }
         }
         return size;
     }
@@ -76,6 +82,14 @@ public class PublishDynamicImgsAdapter extends RecyclerView.Adapter<PublishDynam
         notifyDataSetChanged();
     }
 
+    public void addImgs(Uri imgUri){
+        if(imgs == null){
+            imgs = new ArrayList<>();
+        }
+        imgs.add(imgUri);
+        notifyDataSetChanged();
+    }
+
     public class Holder extends RecyclerView.ViewHolder{
         public ImageView iv_remove_imgs;
         public ImageView iv_publish_dynamic_imgs;
@@ -87,5 +101,6 @@ public class PublishDynamicImgsAdapter extends RecyclerView.Adapter<PublishDynam
         }
 
     }
+
 
 }

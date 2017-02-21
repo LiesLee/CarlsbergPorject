@@ -1,26 +1,53 @@
 package com.carlsberg.app.utils;
 
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.provider.MediaStore;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.carlsberg.app.R;
+import com.carlsberg.app.module.visit.ui.adapter.PublishDynamicImgsAdapter;
+import com.common.base.ui.BaseActivity;
+import com.common.utils.UUID;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.NormalDialog;
 import com.gun0912.tedpicker.Config;
 import com.gun0912.tedpicker.ImagePickerActivity;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.views.util.ToastUtil;
 
+import java.io.File;
+import java.util.AbstractCollection;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by LiesLee on 16/9/29.
  */
 public class UIHelper {
+    public interface TakePictureSavePathCallBack{
+        /**
+         * 回调出去待更新上传及显示
+         * @param path
+         * @param mAdapter
+         */
+        void callbackPath(String path, PublishDynamicImgsAdapter mAdapter);
+        void onImgDelete(int position, PublishDynamicImgsAdapter mAdapter);
+    }
 
     public static final int INTENT_REQUEST_GET_IMAGES = 13;
 
@@ -76,6 +103,60 @@ public class UIHelper {
 //            intent.putParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, image_uris);
 //        }
 //        activity.startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+    }
+
+    /**
+     * 拍照保存并上传
+     * @param baseActivity
+     * @param callBack
+     */
+    public static void takePicture(final BaseActivity baseActivity, final PublishDynamicImgsAdapter mAdapter, final TakePictureSavePathCallBack callBack){
+        List<String> pList = new ArrayList<>();
+        pList.add(Manifest.permission.CAMERA);
+        pList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        pList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        Dexter.checkPermissions(new MultiplePermissionsListener(){
+            @Override
+            public void onPermissionsChecked(MultiplePermissionsReport report) {
+                //granted all
+                if (report.getDeniedPermissionResponses() == null || report.getDeniedPermissionResponses().isEmpty()) {
+                    //随机一个图片文件名放在固定的文件夹里面
+                    String imgPath = FileUtils.getPath(baseActivity, false) + UUID.randomUUID().toString() + ".jpg";
+                    File imgf = new File(imgPath);
+                    if(imgf.exists()){
+                        FileUtils.deleteFolder(imgf);
+                    }
+                    //实例化一个intent，并指定action
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    //指定一个图片路径对应的file对象
+                    Uri imgUri = Uri.fromFile(imgf);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
+                    if(callBack != null){
+                        callBack.callbackPath(imgPath, mAdapter);
+                    }
+                    //启动activity
+                    baseActivity.startActivityForResult(intent, 1024);
+                } else {//denied permission responses isn't empty
+                    DialogHelper.show2btnDialog(baseActivity, "拍照上传需要文件读写及相机权限，请打开系统设置的应用设置页面开启相关权限！",
+                            "取消", "打开设备应用设置", false, null, new DialogHelper.DialogOnclickCallback() {
+                        @Override
+                        public void onButtonClick(Dialog dialog) {
+                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            Uri uri = Uri.fromParts("package", baseActivity.getPackageName(), null);
+                            intent.setData(uri);
+                            baseActivity.startActivity(intent);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                token.continuePermissionRequest();
+            }
+        }, pList);
+
     }
 
 

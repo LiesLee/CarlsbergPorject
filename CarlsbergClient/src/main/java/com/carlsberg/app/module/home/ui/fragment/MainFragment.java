@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.carlsberg.app.R;
+import com.carlsberg.app.module.common.ui.activity.MainActivity;
 import com.carlsberg.app.module.home.ui.adapter.LatelyVisitedAdapter;
 import com.carlsberg.app.module.visit.ui.activity.StoreVisitActivity;
 import com.common.annotation.ActivityFragmentInject;
@@ -92,7 +93,7 @@ public class MainFragment extends BaseFragment<BasePresenterImpl> implements Bas
         super.onClick(view);
         switch (view.getId()) {
             case R.id.iv_more :
-                startActivity(new Intent(baseActivity, StoreVisitActivity.class));
+                ((MainActivity)baseActivity).showMore();
                 break;
 
             default:

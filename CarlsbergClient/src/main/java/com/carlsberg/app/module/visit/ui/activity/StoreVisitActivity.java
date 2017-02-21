@@ -1,5 +1,6 @@
 package com.carlsberg.app.module.visit.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
@@ -69,6 +70,8 @@ public class StoreVisitActivity extends BaseActivity<BasePresenterImpl> implemen
     TextView tv_data_collect;
     @Bind(R.id.tv_clock_off)
     TextView tv_clock_off;
+    @Bind(R.id.tv_take_a_photo)
+    TextView tv_take_a_photo;
 
 
 
@@ -102,6 +105,7 @@ public class StoreVisitActivity extends BaseActivity<BasePresenterImpl> implemen
         tv_sign_in.setOnClickListener(this);
         tv_data_collect.setOnClickListener(this);
         tv_clock_off.setOnClickListener(this);
+        tv_take_a_photo.setOnClickListener(this);
     }
 
     @Override
@@ -192,6 +196,10 @@ public class StoreVisitActivity extends BaseActivity<BasePresenterImpl> implemen
 
             case R.id.tv_clock_off :
 
+                break;
+
+            case R.id.tv_take_a_photo :
+                startActivity(new Intent(baseActivity, UploadPicturesActivity.class));
                 break;
 
             default:

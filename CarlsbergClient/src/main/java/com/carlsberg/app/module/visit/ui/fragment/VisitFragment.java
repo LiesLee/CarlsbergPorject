@@ -1,5 +1,6 @@
 package com.carlsberg.app.module.visit.ui.fragment;
 
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -47,9 +48,11 @@ public class VisitFragment extends BaseFragment<BasePresenterImpl> implements Ba
 
     VisitChildFragmentAdapter mAdapter;
 
+    Handler handler;
+
     @Override
     protected void initView(View fragmentRootView) {
-
+        handler = new Handler();
         et_search.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -61,11 +64,15 @@ public class VisitFragment extends BaseFragment<BasePresenterImpl> implements Ba
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     //接下来在这里做你自己想要做的事，实现自己的业务。
 
+                    et_search.clearFocus();
+
                 }
 
                 return false;
             }
         });
+
+
 
         mAdapter = new VisitChildFragmentAdapter(getChildFragmentManager(), baseActivity);
         List<VisitChildFragment> list = new ArrayList<>();
@@ -79,14 +86,18 @@ public class VisitFragment extends BaseFragment<BasePresenterImpl> implements Ba
         tabLayout.setupWithViewPager(viewPager);
 
         tv_area.setOnClickListener(this);
+        et_search.setOnClickListener(this);
 
+        et_search.setCursorVisible(false);
 
     }
 
     @Override
     public void initData() {
 
+
     }
+
 
     @Override
     public void onClick(View view) {
@@ -112,9 +123,23 @@ public class VisitFragment extends BaseFragment<BasePresenterImpl> implements Ba
                 }, list);
                 popup.showAsDropDown(tv_area);
                 break;
+            case R.id.et_search:
+                et_search.setCursorVisible(true);
+                break;
 
             default:
                 break;
         }
     }
+
+    /**
+     * 选中页面
+     * @param position
+     */
+    public void currentPage(int position){
+        if(mAdapter != null && viewPager!=null){
+            viewPager.setCurrentItem(position);
+        }
+    }
+
 }
