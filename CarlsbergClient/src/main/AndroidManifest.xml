@@ -48,6 +48,7 @@
 
         <activity android:name=".module.common.ui.activity.LoginActivity" android:screenOrientation="portrait" />
         <activity android:name=".module.visit.ui.activity.StoreVisitActivity" android:screenOrientation="portrait" />
+        <activity android:name=".module.visit.ui.activity.DataAddActivity" android:screenOrientation="portrait" />
         <activity android:name=".module.visit.ui.activity.UploadPicturesActivity" android:screenOrientation="portrait" />
         <activity android:name=".module.my.ui.activity.ChangePasswordActivity" android:screenOrientation="portrait" />
         <activity android:name=".module.my.ui.activity.ModifyInfoActivity" android:screenOrientation="portrait" />

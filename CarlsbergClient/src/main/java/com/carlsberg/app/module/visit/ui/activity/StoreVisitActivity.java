@@ -73,8 +73,6 @@ public class StoreVisitActivity extends BaseActivity<BasePresenterImpl> implemen
     @Bind(R.id.tv_take_a_photo)
     TextView tv_take_a_photo;
 
-
-
     ViewPagerAdapter adapter;
     Handler handler;
 
@@ -191,7 +189,7 @@ public class StoreVisitActivity extends BaseActivity<BasePresenterImpl> implemen
                 break;
 
             case R.id.tv_data_collect :
-
+                startActivity(new Intent(baseActivity, DataAddActivity.class));
                 break;
 
             case R.id.tv_clock_off :
