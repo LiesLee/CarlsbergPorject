@@ -14,4 +14,10 @@ public class Constant {
 
     /** 账号状态修改, 请重新登录 */
     public static final int ACCOUNT_ERROR = 207;
+    /** mView显示的Loading类型--dialog */
+    public static final int PROGRESS_TYPE_DIALOG = 0;
+    /** mView显示的Loading类型--list */
+    public static final int PROGRESS_TYPE_LIST = 1;
+    /** mView显示的Loading类型--layout进度条 */
+    public static final int PROGRESS_TYPE_LAYOUT = 2;
 }

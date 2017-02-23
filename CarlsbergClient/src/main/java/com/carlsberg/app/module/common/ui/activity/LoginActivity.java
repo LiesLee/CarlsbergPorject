@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.carlsberg.app.R;
+import com.carlsberg.app.bean.common.User;
+import com.carlsberg.app.module.my.persenter.LoginPersenter;
+import com.carlsberg.app.module.my.view.LoginView;
 import com.carlsberg.app.utils.UIHelper;
 import com.common.annotation.ActivityFragmentInject;
 import com.common.base.presenter.BasePresenterImpl;
@@ -21,7 +24,7 @@ import butterknife.Bind;
  * Created by LiesLee on 16/11/23.
  */
 @ActivityFragmentInject(contentViewId = R.layout.act_login)
-public class LoginActivity extends BaseActivity<BasePresenterImpl> implements BaseView {
+public class LoginActivity extends BaseActivity<LoginPersenter> implements LoginView {
 
     @Bind(R.id.et_phone)
     EditText et_phone;
@@ -42,6 +45,7 @@ public class LoginActivity extends BaseActivity<BasePresenterImpl> implements Ba
 
     @Override
     protected void initView() {
+        mPresenter = new LoginPersenter(this);
         iv_is_show.setOnClickListener(this);
         tv_forgot.setOnClickListener(this);
         tv_login.setOnClickListener(this);
@@ -68,7 +72,9 @@ public class LoginActivity extends BaseActivity<BasePresenterImpl> implements Ba
 
                 break;
             case R.id.tv_login :
-
+                    if(check()){
+                        mPresenter.login(phone, password);
+                    }
                 break;
 
             default:
@@ -107,4 +113,8 @@ public class LoginActivity extends BaseActivity<BasePresenterImpl> implements Ba
         return true;
     }
 
+    @Override
+    public void loginSucceed(User data) {
+
+    }
 }

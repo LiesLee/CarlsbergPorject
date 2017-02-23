@@ -35,9 +35,7 @@ public class HttpConstants {
     public static final int PAY_PASSWORD_ERROR = 206;
 
     public static String getHost(int hostType) {
-        if (HostType.MERCHANT_HOST == hostType) {
-            return getMerchantBaseUrl();
-        } else if (HostType.USER_HOST == hostType) {
+        if (HostType.USER_HOST == hostType) {
             return getCustomerBaseUrl();
         } else {
             return "";
@@ -52,62 +50,8 @@ public class HttpConstants {
      */
     public static String getCustomerBaseUrl() {
         return BuildConfig.DEBUG ?
-                "http://api.test.vip-time.cn:81" :
-                "https://api.vip-time.cn";
-    }
-
-    /**
-     * 商户端域名
-     *
-     * @return
-     */
-    public static String getMerchantBaseUrl() {
-        String debug;
-        String online = "https://api.vip-time.cn";
-        if (TextUtils.isEmpty(SpUtil.readString("MerchantBaseUrl"))) {
-            debug = "http://api.test.vip-time.cn:81";
-        } else {
-            debug = SpUtil.readString("MerchantBaseUrl");
-        }
-
-        return BuildConfig.DEBUG ?
-                debug : online;
-
-    }
-
-    /**
-     * H5域名
-     *
-     * @return
-     */
-    public static String getH5BaseUrl() {
-        String debug;
-        String online = "https://h5.vip-time.cn";
-        if (TextUtils.isEmpty(SpUtil.readString("H5BaseUrl"))) {
-            debug = "http://api.test.vip-time.cn:84";
-        } else {
-            debug = SpUtil.readString("H5BaseUrl");
-
-        }
-        return BuildConfig.DEBUG ?
-                debug : online;
-    }
-
-    /**
-     * 获取资源文件域名
-     *
-     * @return
-     */
-    public static String getResourcesBaseUrl() {
-        String debug = "http://api.test.vip-time.cn:83";
-        String online = "https://static.vip-time.cn";
-        if (TextUtils.isEmpty(SpUtil.readString("ResourcesBaseUrl"))) {
-            debug = "http://api.test.vip-time.cn:83";
-        } else {
-            debug = SpUtil.readString("ResourcesBaseUrl");
-        }
-        return BuildConfig.DEBUG ?
-                debug : online;
+                "http://120.77.157.69/" :
+                "http://120.77.157.69/";
     }
 
     public static String getSignKey() {

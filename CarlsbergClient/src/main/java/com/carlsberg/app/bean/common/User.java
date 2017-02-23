@@ -6,40 +6,19 @@ package com.carlsberg.app.bean.common;
 public class User {
 
     /**
-     * avatar : http://static.test.vip-time.cn:83/app/avatar.gif
-     * hide_wallet : 0
-     * merchant_id : 26
-     * merchant_level : 0
-     * merchant_type : 1
-     * mobile : 138****8880
-     * mobile_encode : OMSU7t8DrPmT1wsi1clogA036C7d2quWb7d3
-     * nickname : 438
-     * status : 1
-     * store_id : 1
+     * user_info : {"user_id":"5","mobile":"15915866777","nick_name":"老王","email":"15915866777@qq.com","role_id":"3","role_name":"组长","manage_id":"3","manage_nick_name":"李主任","manage_role_name":"主任","login_num":"140","login_time":"2017-02-20 15:14:44"}
+     * login_encode : {"login_encode":"hfnMM3nPwPOG/Tu113LAcp8zT3zQMwl00BvAmUzQrp0Kkec4lq0AtpnlKb+nFXr0g8a3Ia7gz69KEfAKhAmaq60eVNvY4NR8KyjxnIVo4Po=","exp_time":1490166885}
      */
 
-    private Info info;
-    /**
-     * life_time : 1483608389
-     * login_encode : MjZfOThhNWUzYTFkM2UxYzQ3ZWNiZmMwNGVmMDJlMWFhMjM=
-     */
-
+    private UserInfo user_info;
     private LoginEncode login_encode;
-    /**
-     * info : {"avatar":"http://static.test.vip-time.cn:83/app/avatar.gif","hide_wallet":"0","merchant_id":"26","merchant_level":"0","merchant_type":"1","mobile":"138****8880","mobile_encode":"OMSU7t8DrPmT1wsi1clogA036C7d2quWb7d3","nickname":"438","status":"1","store_id":"1"}
-     * login_encode : {"life_time":1483608389,"login_encode":"MjZfOThhNWUzYTFkM2UxYzQ3ZWNiZmMwNGVmMDJlMWFhMjM="}
-     * login_time : 2016-12-06 17:26:29
-     */
 
-    private String login_time;
-
-
-    public Info getInfo() {
-        return info;
+    public UserInfo getUser_info() {
+        return user_info;
     }
 
-    public void setInfo(Info info) {
-        this.info = info;
+    public void setUser_info(UserInfo user_info) {
+        this.user_info = user_info;
     }
 
     public LoginEncode getLogin_encode() {
@@ -50,74 +29,39 @@ public class User {
         this.login_encode = login_encode;
     }
 
-    public String getLogin_time() {
-        return login_time;
-    }
+    public static class UserInfo {
+        /**
+         * user_id : 5
+         * mobile : 15915866777
+         * nick_name : 老王
+         * email : 15915866777@qq.com
+         * role_id : 3
+         * role_name : 组长
+         * manage_id : 3
+         * manage_nick_name : 李主任
+         * manage_role_name : 主任
+         * login_num : 140
+         * login_time : 2017-02-20 15:14:44
+         */
 
-    public void setLogin_time(String login_time) {
-        this.login_time = login_time;
-    }
-
-
-    public static class Info {
-        private String avatar;
-        private int hide_wallet;
-        private String merchant_id;
-        private int merchant_level;
-        private int merchant_type;
+        private String user_id;
         private String mobile;
-        private String mobile_encode;
-        private String nickname;
-        private String store_name;
-        private int status;
-        private String store_id;
+        private String nick_name;
+        private String email;
+        private int role_id;
+        private String role_name;
+        private int manage_id;
+        private String manage_nick_name;
+        private String manage_role_name;
+        private String login_num;
+        private String login_time;
 
-        public String getStore_name() {
-            return store_name;
+        public String getUser_id() {
+            return user_id;
         }
 
-        public void setStore_name(String store_name) {
-            this.store_name = store_name;
-        }
-
-        public String getAvatar() {
-            return avatar;
-        }
-
-        public void setAvatar(String avatar) {
-            this.avatar = avatar;
-        }
-
-        public int getHide_wallet() {
-            return hide_wallet;
-        }
-
-        public void setHide_wallet(int hide_wallet) {
-            this.hide_wallet = hide_wallet;
-        }
-
-        public String getMerchant_id() {
-            return merchant_id;
-        }
-
-        public void setMerchant_id(String merchant_id) {
-            this.merchant_id = merchant_id;
-        }
-
-        public int getMerchant_level() {
-            return merchant_level;
-        }
-
-        public void setMerchant_level(int merchant_level) {
-            this.merchant_level = merchant_level;
-        }
-
-        public int getMerchant_type() {
-            return merchant_type;
-        }
-
-        public void setMerchant_type(int merchant_type) {
-            this.merchant_type = merchant_type;
+        public void setUser_id(String user_id) {
+            this.user_id = user_id;
         }
 
         public String getMobile() {
@@ -128,50 +72,87 @@ public class User {
             this.mobile = mobile;
         }
 
-        public String getMobile_encode() {
-            return mobile_encode;
+        public String getNick_name() {
+            return nick_name;
         }
 
-        public void setMobile_encode(String mobile_encode) {
-            this.mobile_encode = mobile_encode;
+        public void setNick_name(String nick_name) {
+            this.nick_name = nick_name;
         }
 
-        public String getNickname() {
-            return nickname;
+        public String getEmail() {
+            return email;
         }
 
-        public void setNickname(String nickname) {
-            this.nickname = nickname;
+        public void setEmail(String email) {
+            this.email = email;
         }
 
-        public int getStatus() {
-            return status;
+        public int getRole_id() {
+            return role_id;
         }
 
-        public void setStatus(int status) {
-            this.status = status;
+        public void setRole_id(int role_id) {
+            this.role_id = role_id;
         }
 
-        public String getStore_id() {
-            return store_id;
+        public String getRole_name() {
+            return role_name;
         }
 
-        public void setStore_id(String store_id) {
-            this.store_id = store_id;
+        public void setRole_name(String role_name) {
+            this.role_name = role_name;
+        }
+
+        public int getManage_id() {
+            return manage_id;
+        }
+
+        public void setManage_id(int manage_id) {
+            this.manage_id = manage_id;
+        }
+
+        public String getManage_nick_name() {
+            return manage_nick_name;
+        }
+
+        public void setManage_nick_name(String manage_nick_name) {
+            this.manage_nick_name = manage_nick_name;
+        }
+
+        public String getManage_role_name() {
+            return manage_role_name;
+        }
+
+        public void setManage_role_name(String manage_role_name) {
+            this.manage_role_name = manage_role_name;
+        }
+
+        public String getLogin_num() {
+            return login_num;
+        }
+
+        public void setLogin_num(String login_num) {
+            this.login_num = login_num;
+        }
+
+        public String getLogin_time() {
+            return login_time;
+        }
+
+        public void setLogin_time(String login_time) {
+            this.login_time = login_time;
         }
     }
 
     public static class LoginEncode {
-        private long life_time;
+        /**
+         * login_encode : hfnMM3nPwPOG/Tu113LAcp8zT3zQMwl00BvAmUzQrp0Kkec4lq0AtpnlKb+nFXr0g8a3Ia7gz69KEfAKhAmaq60eVNvY4NR8KyjxnIVo4Po=
+         * exp_time : 1490166885
+         */
+
         private String login_encode;
-
-        public long getLife_time() {
-            return life_time;
-        }
-
-        public void setLife_time(long life_time) {
-            this.life_time = life_time;
-        }
+        private long exp_time;
 
         public String getLogin_encode() {
             return login_encode;
@@ -179,6 +160,14 @@ public class User {
 
         public void setLogin_encode(String login_encode) {
             this.login_encode = login_encode;
+        }
+
+        public long getExp_time() {
+            return exp_time;
+        }
+
+        public void setExp_time(long exp_time) {
+            this.exp_time = exp_time;
         }
     }
 }

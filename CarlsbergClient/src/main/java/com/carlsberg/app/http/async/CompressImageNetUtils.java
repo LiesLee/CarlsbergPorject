@@ -50,7 +50,7 @@ public class CompressImageNetUtils {
                     Map<String, String> map = new HashMap<>();
                     map.put("uptype", type);
 
-                    RequestParams params = new RequestParams(BaseProtocol.createPatams1(map));
+                    RequestParams params = new RequestParams(BaseProtocol.createPatams1(map, "addPhoto"));
 
                     //File[] images = new File[picpaths.size()];
                     try{

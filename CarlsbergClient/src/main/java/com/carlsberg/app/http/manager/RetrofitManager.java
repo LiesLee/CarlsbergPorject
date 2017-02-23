@@ -10,6 +10,7 @@ import com.carlsberg.app.R;
 import com.carlsberg.app.application.CarlsbergAppcation;
 import com.carlsberg.app.common.Constant;
 import com.carlsberg.app.http.HttpConstants;
+import com.carlsberg.app.http.service.CommonService;
 import com.common.ShiHuiActivityManager;
 import com.common.base.ui.BaseView;
 import com.common.callback.RequestCallback;
@@ -50,6 +51,8 @@ public class RetrofitManager {
     private int hostType;
     // 管理不同HostType的单例
     private static SparseArray<RetrofitManager> sInstanceManager = new SparseArray<>(HostType.TYPE_COUNT);
+
+    private CommonService commonService;
 
     /*//设缓存有效期为两天
     private static final long CACHE_STALE_SEC = 60 * 60 * 24 * 2;
@@ -258,5 +261,13 @@ public class RetrofitManager {
         return NetUtil.isConnected(IStudyApplication.getInstance()) ? CACHE_CONTROL_NETWORK : CACHE_CONTROL_CACHE;
     }
 */
+
+
+    public CommonService getCommonService() {
+        if(commonService == null){
+            commonService = createRetrofit().create(CommonService.class);
+        }
+        return commonService;
+    }
 
 }

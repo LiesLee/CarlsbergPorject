@@ -56,7 +56,7 @@ public class CarlsbergAppcation extends MultiDexApplication {
      */
     public boolean isLogin(){
 
-        return (getUser() != null && getUser().getInfo() != null);
+        return (getUser() != null && getUser().getUser_info() != null);
     }
 
     public void setUser(User user) {
@@ -73,13 +73,13 @@ public class CarlsbergAppcation extends MultiDexApplication {
 
 
     public User getUser(){
-        if(user == null || user.getInfo() ==null){
+        if(user == null || user.getUser_info() ==null){
             String js = SpUtil.readString(Constant.USER);
             if(TextUtils.isEmpty(js)){
                 return null;
             }else{
                 user = JSONObject.parseObject(js, User.class);
-                if(user!=null && user.getInfo() != null){
+                if(user!=null && user.getUser_info() != null){
                     return user;
                 }else{
                     return null;

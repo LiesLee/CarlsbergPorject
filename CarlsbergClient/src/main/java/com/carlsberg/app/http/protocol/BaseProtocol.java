@@ -85,7 +85,7 @@ public class BaseProtocol {
         return sign;
     }
 
-    public static SortedMap<String, Object> createPatams(Map<String, Object> parameters){
+    public static SortedMap<String, Object> createPatams(Map<String, Object> parameters, String urlName){
         HashMap<String, Object> hashMap = new HashMap<>(parameters);
         try {
             hashMap.put("app_version", CarlsbergAppcation.getInstance().getPackageManager().getPackageInfo(CarlsbergAppcation.getInstance().getPackageName(),PackageManager.GET_META_DATA).versionName);
@@ -106,10 +106,11 @@ public class BaseProtocol {
 
         SortedMap<String, Object> map = new TreeMap<>(hashMap);
         map.put("api_sign", createSign(map));
+        map.put("a", urlName);
         return map;
     }
 
-    public static SortedMap<String, String> createPatams1(Map<String, String> parameters){
+    public static SortedMap<String, String> createPatams1(Map<String, String> parameters, String urlName){
         HashMap<String, String> hashMap = new HashMap<>(parameters);
         try {
             hashMap.put("app_version", ""+CarlsbergAppcation.getInstance().getPackageManager().getPackageInfo(CarlsbergAppcation.getInstance().getPackageName(),PackageManager.GET_META_DATA).versionName);
@@ -129,6 +130,7 @@ public class BaseProtocol {
 
         SortedMap<String, String> map = new TreeMap<>(hashMap);
         map.put("api_sign", createSign1(map));
+        map.put("a", urlName);
         return map;
     }
 
