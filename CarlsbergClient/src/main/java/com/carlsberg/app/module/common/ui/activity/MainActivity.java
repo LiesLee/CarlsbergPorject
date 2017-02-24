@@ -70,6 +70,7 @@ public class MainActivity extends BaseActivity<BasePresenterImpl> implements Bas
 
     @Override
     public void initData() {
+
     }
 
     public void initHome(){

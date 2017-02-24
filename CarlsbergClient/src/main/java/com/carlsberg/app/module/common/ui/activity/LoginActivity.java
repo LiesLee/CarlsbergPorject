@@ -1,6 +1,7 @@
 package com.carlsberg.app.module.common.ui.activity;
 
 
+import android.content.Intent;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
@@ -115,6 +116,7 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements Login
 
     @Override
     public void loginSucceed(User data) {
-
+        Intent intent = new Intent(baseActivity, MainActivity.class);
+        startActivity(intent);
     }
 }

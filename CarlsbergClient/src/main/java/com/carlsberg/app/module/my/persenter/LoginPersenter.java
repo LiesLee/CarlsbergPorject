@@ -46,7 +46,10 @@ public class LoginPersenter extends BasePresenterImpl<LoginView> {
 
                     @Override
                     public void requestSuccess(User data) {
-                        mView.loginSucceed(data);
+                        if(data!=null){
+                            CarlsbergAppcation.getInstance().setUser(data);
+                            mView.loginSucceed(data);
+                        }
                     }
                 });
     }

@@ -6,8 +6,8 @@ package com.carlsberg.app.bean.common;
 public class User {
 
     /**
-     * user_info : {"user_id":"5","mobile":"15915866777","nick_name":"老王","email":"15915866777@qq.com","role_id":"3","role_name":"组长","manage_id":"3","manage_nick_name":"李主任","manage_role_name":"主任","login_num":"140","login_time":"2017-02-20 15:14:44"}
-     * login_encode : {"login_encode":"hfnMM3nPwPOG/Tu113LAcp8zT3zQMwl00BvAmUzQrp0Kkec4lq0AtpnlKb+nFXr0g8a3Ia7gz69KEfAKhAmaq60eVNvY4NR8KyjxnIVo4Po=","exp_time":1490166885}
+     * user_info : {"user_id":"1","mobile":"15915866779","nick_name":"测试","email":"15915866779@qq.com","role_id":"1","role_name":"管理员","manage_id":"0","manage_nick_name":"","manage_role_name":"","login_num":"73","login_time":"2017-02-24 14:53:30"}
+     * login_encode : {"login_encode":"hfnMM3nPwPOG/Tu113LAcoS7aahWfHrd6EAB/sJ5dg8yT48CIdsUmOcYSv7E3wT7IYg+v7GutE3ySp0Yj1LFzQfap2ZnG1j2E/fGkIhRPZA=","exp_time":1490511426}
      */
 
     private UserInfo user_info;
@@ -31,17 +31,17 @@ public class User {
 
     public static class UserInfo {
         /**
-         * user_id : 5
-         * mobile : 15915866777
-         * nick_name : 老王
-         * email : 15915866777@qq.com
-         * role_id : 3
-         * role_name : 组长
-         * manage_id : 3
-         * manage_nick_name : 李主任
-         * manage_role_name : 主任
-         * login_num : 140
-         * login_time : 2017-02-20 15:14:44
+         * user_id : 1
+         * mobile : 15915866779
+         * nick_name : 测试
+         * email : 15915866779@qq.com
+         * role_id : 1
+         * role_name : 管理员
+         * manage_id : 0
+         * manage_nick_name :
+         * manage_role_name :
+         * login_num : 73
+         * login_time : 2017-02-24 14:53:30
          */
 
         private String user_id;
@@ -147,8 +147,8 @@ public class User {
 
     public static class LoginEncode {
         /**
-         * login_encode : hfnMM3nPwPOG/Tu113LAcp8zT3zQMwl00BvAmUzQrp0Kkec4lq0AtpnlKb+nFXr0g8a3Ia7gz69KEfAKhAmaq60eVNvY4NR8KyjxnIVo4Po=
-         * exp_time : 1490166885
+         * login_encode : hfnMM3nPwPOG/Tu113LAcoS7aahWfHrd6EAB/sJ5dg8yT48CIdsUmOcYSv7E3wT7IYg+v7GutE3ySp0Yj1LFzQfap2ZnG1j2E/fGkIhRPZA=
+         * exp_time : 1490511426
          */
 
         private String login_encode;

@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.carlsberg.app.R;
+import com.carlsberg.app.bean.common.User;
 import com.carlsberg.app.utils.UIHelper;
 import com.common.annotation.ActivityFragmentInject;
 import com.common.base.presenter.BasePresenterImpl;

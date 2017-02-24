@@ -39,7 +39,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".module.common.ui.activity.MainActivity">
+        <activity android:name=".module.common.ui.activity.LogoAct">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -47,6 +47,7 @@
         </activity>
 
         <activity android:name=".module.common.ui.activity.LoginActivity" android:screenOrientation="portrait" />
+        <activity android:name=".module.common.ui.activity.MainActivity" android:screenOrientation="portrait" />
         <activity android:name=".module.visit.ui.activity.StoreVisitActivity" android:screenOrientation="portrait" />
         <activity android:name=".module.visit.ui.activity.DataAddActivity" android:screenOrientation="portrait" />
         <activity android:name=".module.visit.ui.activity.UploadPicturesActivity" android:screenOrientation="portrait" />
