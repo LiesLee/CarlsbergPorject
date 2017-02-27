@@ -12,8 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.carlsberg.app.R;
+import com.carlsberg.app.bean.home.HomeDataResponse;
+import com.carlsberg.app.common.Constant;
 import com.carlsberg.app.module.common.ui.activity.MainActivity;
+import com.carlsberg.app.module.home.persenter.MainFragmentPresenter;
 import com.carlsberg.app.module.home.ui.adapter.LatelyVisitedAdapter;
+import com.carlsberg.app.module.home.view.MainFragmentView;
 import com.carlsberg.app.module.visit.ui.activity.StoreVisitActivity;
 import com.common.annotation.ActivityFragmentInject;
 import com.common.base.presenter.BasePresenterImpl;
@@ -29,7 +33,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  * Created by LiesLee on 17/2/14.
  */
 @ActivityFragmentInject(contentViewId = R.layout.fra_main)
-public class MainFragment extends BaseFragment<BasePresenterImpl> implements BaseView {
+public class MainFragment extends BaseFragment<MainFragmentPresenter> implements MainFragmentView {
 
     @Bind(R.id.pcfl_pull_to_refresh)
     PtrClassicFrameLayout pcfl_pull_to_refresh;
@@ -47,6 +51,7 @@ public class MainFragment extends BaseFragment<BasePresenterImpl> implements Bas
 
     @Override
     protected void initView(View fragmentRootView) {
+        mPresenter = new MainFragmentPresenter(this);
         handler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {
@@ -57,12 +62,7 @@ public class MainFragment extends BaseFragment<BasePresenterImpl> implements Bas
         RefreshUtil.init_material_pull(baseActivity, pcfl_pull_to_refresh, new RefreshUtil.PtrRefreshListener() {
             @Override
             public void OnRefresh(final PtrFrameLayout frame) {
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        pcfl_pull_to_refresh.refreshComplete();
-                    }
-                }, 3000);
+                mPresenter.loadHomeData();
             }
         });
         header = LayoutInflater.from(getContext()).inflate(R.layout.header_mian_fra, (ViewGroup) rv_list.getParent(), false);
@@ -88,6 +88,16 @@ public class MainFragment extends BaseFragment<BasePresenterImpl> implements Bas
 
     }
 
+
+    @Override
+    public void hideProgress(int type) {
+        super.hideProgress(type);
+        if (type == Constant.PROGRESS_TYPE_LIST) {
+            pcfl_pull_to_refresh.refreshComplete();
+        }
+    }
+
+
     @Override
     public void onClick(View view) {
         super.onClick(view);
@@ -99,5 +109,11 @@ public class MainFragment extends BaseFragment<BasePresenterImpl> implements Bas
             default:
                 break;
         }
+    }
+
+    @Override
+    public void loadListDone(HomeDataResponse dataResponse) {
+        tv_name.setText(dataResponse.getUser_info().getNick_name());
+        tv_type.setText(dataResponse.getUser_info().getRole_name());
     }
 }

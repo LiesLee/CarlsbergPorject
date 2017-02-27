@@ -12,10 +12,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.carlsberg.app.R;
+import com.carlsberg.app.application.CarlsbergAppcation;
+import com.carlsberg.app.module.common.persenter.MainActivityPresenter;
 import com.carlsberg.app.module.common.ui.adapter.MainFragmentAdapter;
+import com.carlsberg.app.module.common.view.MainActivityView;
 import com.carlsberg.app.module.home.ui.fragment.MainFragment;
 import com.carlsberg.app.module.my.ui.fragment.MyFragment;
 import com.carlsberg.app.module.visit.ui.fragment.VisitFragment;
+import com.carlsberg.app.utils.DialogHelper;
 import com.common.ShiHuiActivityManager;
 import com.common.annotation.ActivityFragmentInject;
 import com.common.base.presenter.BasePresenterImpl;
@@ -30,7 +34,7 @@ import java.util.List;
 import butterknife.Bind;
 
 @ActivityFragmentInject(contentViewId = R.layout.act_main, toolbarTitle = R.string.app_name)
-public class MainActivity extends BaseActivity<BasePresenterImpl> implements BaseView {
+public class MainActivity extends BaseActivity<MainActivityPresenter> implements MainActivityView {
     /**
      * 主页存放3个模块的ViewPager
      */
@@ -65,12 +69,13 @@ public class MainActivity extends BaseActivity<BasePresenterImpl> implements Bas
 
     @Override
     protected void initView() {
-        initHome();
+        mPresenter = new MainActivityPresenter(this);
+
     }
 
     @Override
     public void initData() {
-
+        mPresenter.quickLogin();
     }
 
     public void initHome(){
@@ -148,5 +153,31 @@ public class MainActivity extends BaseActivity<BasePresenterImpl> implements Bas
 
 
     }
+
+    @Override
+    public void quickLoginSuccess() {
+        initHome();
+    }
+
+    @Override
+    public void quickLoginError() {
+        DialogHelper.show2btnDialog(baseActivity, "登录状态刷新失败", "退出", "重新登录", true,
+                new DialogHelper.DialogOnclickCallback() {
+                    @Override
+                    public void onButtonClick(Dialog dialog) {
+                        ShiHuiActivityManager.getInstance().cleanActivity();
+                    }
+                }, new DialogHelper.DialogOnclickCallback() {
+                    @Override
+                    public void onButtonClick(Dialog dialog) {
+                        CarlsbergAppcation.getInstance().setUser(null);
+                        Intent intent = new Intent(baseActivity, LoginActivity.class);
+                        intent.putExtra("isChangePass", true);
+                        startActivity(intent);
+                        finish();
+                    }
+                }).setCancelable(false);
+    }
+
 
 }

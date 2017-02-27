@@ -1,6 +1,7 @@
 package com.carlsberg.app.http.protocol;
 
 
+import com.carlsberg.app.application.CarlsbergAppcation;
 import com.carlsberg.app.bean.common.User;
 import com.carlsberg.app.http.manager.RetrofitManager;
 import com.common.http.HostType;
@@ -29,6 +30,19 @@ public class CommonProtocol extends BaseProtocol{
         params.put("login_password", MD5Util.MD5Encode(password, "utf-8"));
         return RetrofitManager.getInstance(HostType.USER_HOST).getCommonService()
                 .login(createPatams(params, "login"))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()) //返回结果处理线程
+                .unsubscribeOn(Schedulers.io());
+    }
+    /**
+     * quickLogin
+     * @return
+     */
+    public static Observable<HttpResult<User>> quickLogin(){
+        Map<String, Object> params = new HashMap<>();
+        params.put("login_encode", CarlsbergAppcation.getInstance().getUser().getLogin_encode().getLogin_encode());
+        return RetrofitManager.getInstance(HostType.USER_HOST).getCommonService()
+                .login(createPatams(params, "quickLogin"))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()) //返回结果处理线程
                 .unsubscribeOn(Schedulers.io());
