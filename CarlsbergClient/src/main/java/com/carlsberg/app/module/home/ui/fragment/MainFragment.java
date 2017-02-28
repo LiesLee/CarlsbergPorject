@@ -115,5 +115,8 @@ public class MainFragment extends BaseFragment<MainFragmentPresenter> implements
     public void loadListDone(HomeDataResponse dataResponse) {
         tv_name.setText(dataResponse.getUser_info().getNick_name());
         tv_type.setText(dataResponse.getUser_info().getRole_name());
+        if(dataResponse.getRecent_plan()!=null && dataResponse.getRecent_plan().getLists()!=null && dataResponse.getRecent_plan().getLists().size() > 0){
+            mAdapter.setData(dataResponse.getRecent_plan().getLists());
+        }
     }
 }
