@@ -5,21 +5,25 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.carlsberg.app.R;
+import com.carlsberg.app.module.visit.persenter.StoreVisitPresenter;
 import com.carlsberg.app.module.visit.ui.adapter.BaseListAdapter;
 import com.carlsberg.app.module.visit.ui.adapter.ViewPagerAdapter;
 import com.carlsberg.app.module.visit.ui.fragment.ScrollableBaseFragment;
 import com.carlsberg.app.module.visit.ui.fragment.StoreInfoShowFragment;
 import com.carlsberg.app.module.visit.ui.fragment.StorePictureFragment;
+import com.carlsberg.app.module.visit.view.StoreVisitView;
 import com.common.annotation.ActivityFragmentInject;
 import com.common.base.presenter.BasePresenterImpl;
 import com.common.base.ui.BaseActivity;
 import com.common.base.ui.BaseView;
 import com.views.util.RefreshUtil;
+import com.views.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +42,7 @@ import ru.noties.scrollable.ScrollableLayout;
  * Created by LiesLee on 2017/2/18.
  */
 @ActivityFragmentInject(contentViewId = R.layout.act_store_visit, toolbarTitle = R.string.app_name)
-public class StoreVisitActivity extends BaseActivity<BasePresenterImpl> implements BaseView {
+public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implements StoreVisitView {
     private static final String ARG_LAST_SCROLL_Y = "arg.LastScrollY";
 
     @Bind(R.id.pcfl_pull_to_refresh)
@@ -75,10 +79,22 @@ public class StoreVisitActivity extends BaseActivity<BasePresenterImpl> implemen
 
     ViewPagerAdapter adapter;
     Handler handler;
+    private String store_id;
+    private String store_name;
 
 
     @Override
     protected void initView() {
+        store_id = getIntent().getStringExtra("store_id");
+        store_name = getIntent().getStringExtra("store_name");
+        if(TextUtils.isEmpty(store_id)){
+            finish();
+            ToastUtil.showShortToast(baseActivity, "ID数据为空");
+            return;
+        }
+
+        tv_title.setText(store_name);
+
         handler = new Handler();
 
         mScrollableLayout.setDraggableView(tabs);
