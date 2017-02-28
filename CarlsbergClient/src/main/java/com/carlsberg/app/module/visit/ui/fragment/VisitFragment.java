@@ -14,8 +14,12 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.carlsberg.app.R;
 import com.carlsberg.app.bean.visit.RegionInfo;
+import com.carlsberg.app.bean.visit.VisitRespone;
+import com.carlsberg.app.module.visit.persenter.VisitFragmentPresenter;
 import com.carlsberg.app.module.visit.ui.adapter.VisitChildFragmentAdapter;
 import com.carlsberg.app.module.visit.ui.popup.SelectAreaPopup;
+import com.carlsberg.app.module.visit.view.VisitFragmentView;
+import com.carlsberg.app.utils.DialogHelper;
 import com.common.annotation.ActivityFragmentInject;
 import com.common.base.presenter.BasePresenterImpl;
 import com.common.base.ui.BaseActivity;
@@ -33,7 +37,7 @@ import butterknife.Bind;
  * Created by LiesLee on 17/2/14.
  */
 @ActivityFragmentInject(contentViewId = R.layout.fra_visit)
-public class VisitFragment extends BaseFragment<BasePresenterImpl> implements BaseView {
+public class VisitFragment extends BaseFragment<VisitFragmentPresenter> implements VisitFragmentView {
     @Bind(R.id.et_search)
     EditText et_search;
     @Bind(R.id.tv_area)
@@ -52,6 +56,7 @@ public class VisitFragment extends BaseFragment<BasePresenterImpl> implements Ba
 
     @Override
     protected void initView(View fragmentRootView) {
+        mPresenter = new VisitFragmentPresenter(this);
         handler = new Handler();
         et_search.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -65,6 +70,14 @@ public class VisitFragment extends BaseFragment<BasePresenterImpl> implements Ba
                     //接下来在这里做你自己想要做的事，实现自己的业务。
 
                     et_search.clearFocus();
+                    String str = et_search.getText().toString();
+
+                    if(mAdapter==null || mAdapter.getFragments() == null || mAdapter.getFragments().size() == 0){
+                        return false;
+                    }
+                    mAdapter.getFragments().get(viewPager.getCurrentItem()).setSearch_text(str);
+
+                    mAdapter.getFragments().get(viewPager.getCurrentItem()).load();
 
                 }
 
@@ -79,7 +92,9 @@ public class VisitFragment extends BaseFragment<BasePresenterImpl> implements Ba
         VisitChildFragment c1 = new VisitChildFragment();
         VisitChildFragment c2 = new VisitChildFragment();
         c1.setName("今日拜访");
+        c1.setShowType(1);
         c2.setName("最近拜访");
+        c2.setShowType(0);
         Collections.addAll(list, c1, c2);
         mAdapter.setFragments(list);
         viewPager.setAdapter(mAdapter);
@@ -89,6 +104,29 @@ public class VisitFragment extends BaseFragment<BasePresenterImpl> implements Ba
         et_search.setOnClickListener(this);
 
         et_search.setCursorVisible(false);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(mAdapter==null || mAdapter.getFragments() == null || mAdapter.getFragments().size() == 0){
+                    return;
+                }
+
+                String str = mAdapter.getFragments().get(position).getStatus_name();
+                tv_area.setText(TextUtils.isEmpty(str) ? "全部" : str);
+                et_search.setText(mAdapter.getFragments().get(position).getSearch_text());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 
@@ -104,24 +142,25 @@ public class VisitFragment extends BaseFragment<BasePresenterImpl> implements Ba
         super.onClick(view);
         switch (view.getId()) {
             case R.id.tv_area:
-                List<RegionInfo> list = new ArrayList<>();
-                RegionInfo re1 = new RegionInfo("1", "1");
-                RegionInfo re2 = new RegionInfo("2", "2");
-                RegionInfo re3 = new RegionInfo("3", "3");
-                list.add(re1);
-                list.add(re2);
-                list.add(re3);
-                popup = new SelectAreaPopup(baseActivity, new SelectAreaPopup.PopupCallBack() {
-                    @Override
-                    public void callback(String payeeId, String name) {
-                        if (mPagePosition == 0) {
+                if(mAdapter==null || mAdapter.getFragments() == null || mAdapter.getFragments().size() == 0){
+                    break;
+                }
 
-                        } else {
-
+                List<VisitRespone.StatusType> typeList = mAdapter.getFragments().get(viewPager.getCurrentItem()).getTypeList();
+                if(typeList != null && typeList.size() > 0){
+                    popup = new SelectAreaPopup(baseActivity, new SelectAreaPopup.PopupCallBack() {
+                        @Override
+                        public void callback(VisitRespone.StatusType statusType) {
+                            mAdapter.getFragments().get(viewPager.getCurrentItem()).setStatus_type(statusType.getStatus_type());
+                            mAdapter.getFragments().get(viewPager.getCurrentItem()).setStatus_name(statusType.getStatus_title());
+                            tv_area.setText(statusType.getStatus_title());
                         }
-                    }
-                }, list);
-                popup.showAsDropDown(tv_area);
+                    }, typeList);
+                    popup.showAsDropDown(tv_area);
+
+                }else{
+                    DialogHelper.showTipsDialog(baseActivity, "数据还没加载到哦~\n请稍后或下拉重新加载!", "好的", null);
+                }
                 break;
             case R.id.et_search:
                 et_search.setCursorVisible(true);

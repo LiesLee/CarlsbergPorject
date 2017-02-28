@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.carlsberg.app.R;
 import com.carlsberg.app.bean.home.HomeDataResponse;
+import com.carlsberg.app.bean.visit.Visit;
 import com.carlsberg.app.module.visit.ui.activity.StoreVisitActivity;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.common.base.ui.BaseAdapter;
@@ -18,15 +19,15 @@ import java.util.List;
  * Created by rrsh on 16/10/13.
  */
 
-public class LatelyVisitedAdapter extends BaseAdapter<HomeDataResponse.RecentPlan.Visit> {
+public class LatelyVisitedAdapter extends BaseAdapter<Visit> {
 
 
-    public LatelyVisitedAdapter(Context ctx, List<HomeDataResponse.RecentPlan.Visit> data) {
+    public LatelyVisitedAdapter(Context ctx, List<Visit> data) {
         super(ctx, R.layout.item_lately_visited, null);
     }
 
     @Override
-    protected void convert(BaseViewHolder baseViewHolder, final HomeDataResponse.RecentPlan.Visit data) {
+    protected void convert(BaseViewHolder baseViewHolder, final Visit data) {
         baseViewHolder.setText(R.id.tv_name, data.getStore_name());
         baseViewHolder.setText(R.id.tv_address, data.getArea_title() + " - " + data.getRegion_title());
         baseViewHolder.setText(R.id.tv_type, data.getFlag_plan_title());

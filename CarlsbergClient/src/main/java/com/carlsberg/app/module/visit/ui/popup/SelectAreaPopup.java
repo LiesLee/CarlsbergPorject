@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.carlsberg.app.R;
 import com.carlsberg.app.bean.visit.RegionInfo;
+import com.carlsberg.app.bean.visit.VisitRespone;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class SelectAreaPopup extends PopupWindow {
     private PopupCallBack mListener;
 
 
-    public SelectAreaPopup(Activity context, PopupCallBack popupListener, final List<RegionInfo> data) {
+    public SelectAreaPopup(Activity context, PopupCallBack popupListener, final List<VisitRespone.StatusType> data) {
         super(context);
         mListener = popupListener;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -79,20 +80,23 @@ public class SelectAreaPopup extends PopupWindow {
         ll_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.callback("0","全部"); //默认 0 为全部 ,店员为自己
+                VisitRespone.StatusType statusType = new VisitRespone.StatusType();
+                statusType.setStatus_title("全部");
+                statusType.setStatus_type(0);
+                mListener.callback(statusType); //默认 0 为全部 ,店员为自己
                 dismiss();
             }
         });
 
         for (int i = 0; i < data.size(); i++) {
-            final int finalI = i;
             LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.item_area, null);
             TextView tv = (TextView) linearLayout.findViewById(R.id.tv_name);
-            tv.setText(data.get(i).getName());
+            tv.setText(data.get(i).getStatus_title());
+            final int finalI = i;
             tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.callback(data.get(finalI).getType(),data.get(finalI).getName());
+                    mListener.callback(data.get(finalI));
                     dismiss();
                 }
             });
@@ -104,6 +108,6 @@ public class SelectAreaPopup extends PopupWindow {
 
 
     public interface PopupCallBack {
-        void callback(String Id, String name);
+        void callback(VisitRespone.StatusType statusType);
     }
 }
