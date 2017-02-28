@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.carlsberg.app.R;
+import com.carlsberg.app.bean.visit.VisitStoreResponse;
+import com.carlsberg.app.common.Constant;
 import com.carlsberg.app.module.visit.persenter.StoreVisitPresenter;
 import com.carlsberg.app.module.visit.ui.adapter.BaseListAdapter;
 import com.carlsberg.app.module.visit.ui.adapter.ViewPagerAdapter;
@@ -57,6 +59,9 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
     @Bind(R.id.header)
     LinearLayout header;
 
+    @Bind(R.id.ll_task_btn)
+    LinearLayout ll_task_btn;
+
     @Bind(R.id.tv_name)
     TextView tv_name;
     @Bind(R.id.tv_type)
@@ -64,8 +69,6 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
     @Bind(R.id.tv_status)
     TextView tv_status;
 
-    @Bind(R.id.ll_store_info)
-    LinearListView ll_store_info;
 
 
     @Bind(R.id.tv_sign_in)
@@ -77,6 +80,19 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
     @Bind(R.id.tv_take_a_photo)
     TextView tv_take_a_photo;
 
+    @Bind(R.id.tv_area)
+    TextView tv_area;
+    @Bind(R.id.tv_store_type)
+    TextView tv_store_type;
+    @Bind(R.id.tv_nature)
+    TextView tv_nature;
+    @Bind(R.id.tv_store_address)
+    TextView tv_store_address;
+    @Bind(R.id.tv_checkin_date)
+    TextView tv_checkin_date;
+    @Bind(R.id.tv_goaway_date)
+    TextView tv_goaway_date;
+
     ViewPagerAdapter adapter;
     Handler handler;
     private String store_id;
@@ -85,6 +101,7 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
 
     @Override
     protected void initView() {
+        mPresenter = new StoreVisitPresenter(this);
         store_id = getIntent().getStringExtra("store_id");
         store_name = getIntent().getStringExtra("store_name");
         if(TextUtils.isEmpty(store_id)){
@@ -107,12 +124,7 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
         RefreshUtil.init_material_pull(baseActivity, pcfl_pull_to_refresh, new RefreshUtil.PtrRefreshListener() {
             @Override
             public void OnRefresh(final PtrFrameLayout frame) {
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        pcfl_pull_to_refresh.refreshComplete();
-                    }
-                }, 3000);
+                mPresenter.storeView(store_id);
             }
         });
 
@@ -120,6 +132,8 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
         tv_data_collect.setOnClickListener(this);
         tv_clock_off.setOnClickListener(this);
         tv_take_a_photo.setOnClickListener(this);
+
+        RefreshUtil.autoRefresh(pcfl_pull_to_refresh);
     }
 
     @Override
@@ -188,8 +202,6 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
 
     @Override
     public void initData() {
-        BaseListAdapter adapter = new BaseListAdapter(baseActivity, 4);
-        ll_store_info.setAdapter(adapter);
     }
 
     @Override
@@ -222,4 +234,73 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
     }
 
 
+    @Override
+    public void hideProgress(int type) {
+        super.hideProgress(type);
+        if (type == Constant.PROGRESS_TYPE_LIST) {
+            pcfl_pull_to_refresh.refreshComplete();
+        }
+    }
+
+
+    @Override
+    public void loadDataDone(VisitStoreResponse data) {
+        if(data!=null){
+            tv_name.setText(data.getStore_task().getStore_name());
+            tv_type.setText(data.getStore_task().getFlag_plan_title());
+            tv_status.setText(data.getStore_task().getTask_status_title());
+
+            if(data.getStore_task().getTask_status() == 0){
+                tv_status.setTextColor(getResources().getColor(R.color.blue));
+            }else if(data.getStore_task().getTask_status() == 1){
+                tv_status.setTextColor(getResources().getColor(R.color.green));
+            }else{
+                tv_status.setTextColor(getResources().getColor(R.color.red));
+            }
+            if (data.getStore_task().getFlag_plan() == 0) {
+                tv_type.setBackgroundResource(R.color.black_54);
+            } else {
+                tv_type.setBackgroundResource(R.color.red);
+            }
+
+            tv_area.setText("所属区域："+data.getStore_task().getArea_title()+" - " +data.getStore_task().getRegion_title());
+            tv_store_type.setText("门店性质：" + data.getStore_task().getType_title());
+            tv_nature.setText("门店类型：" +data.getStore_task().getNature_title());
+            tv_store_address.setText("门店地址：" + data.getStore_task().getStore_addr());
+
+            tv_checkin_date.setText("入店时间：" + data.getStore_task().getCheckin_date());
+            tv_goaway_date.setText("离店时间：" + data.getStore_task().getGoaway_date());
+
+            if(data.getTask_button()!=null && data.getTask_button().size() >0){
+                ll_task_btn.setVisibility(View.VISIBLE);
+                for(VisitStoreResponse.TaskButton taskButton : data.getTask_button()){
+                    switch (taskButton.getButton_type()) {
+                        case "checkin" :
+                            tv_sign_in.setVisibility(taskButton.getIs_open() == 0 ? View.GONE : View.VISIBLE);
+                            tv_sign_in.setText(taskButton.getButton_title());
+                            break;
+                        case "collect" :
+                            tv_data_collect.setVisibility(taskButton.getIs_open() == 0 ? View.GONE : View.VISIBLE);
+                            tv_data_collect.setText(taskButton.getButton_title());
+                            break;
+                        case "photo" :
+                            tv_take_a_photo.setVisibility(taskButton.getIs_open() == 0 ? View.GONE : View.VISIBLE);
+                            tv_take_a_photo.setText(taskButton.getButton_title());
+                            break;
+                        case "goaway" :
+                            tv_clock_off.setVisibility(taskButton.getIs_open() == 0 ? View.GONE : View.VISIBLE);
+                            tv_clock_off.setText(taskButton.getButton_title());
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            }else{
+                ll_task_btn.setVisibility(View.GONE);
+            }
+
+
+        }
+    }
 }

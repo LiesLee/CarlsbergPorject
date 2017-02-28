@@ -33,16 +33,16 @@ public class LatelyVisitedAdapter extends BaseAdapter<Visit> {
         baseViewHolder.setText(R.id.tv_type, data.getFlag_plan_title());
         baseViewHolder.setText(R.id.tv_status, data.getTask_status_title());
         if(data.getTask_status() == 0){
-            baseViewHolder.setBackgroundColor(R.id.tv_type, R.color.blue);
+            baseViewHolder.setTextColor(R.id.tv_status, mContext.getResources().getColor(R.color.blue));
         }else if(data.getTask_status() == 1){
-            baseViewHolder.setBackgroundColor(R.id.tv_type, R.color.green);
+            baseViewHolder.setTextColor(R.id.tv_status,  mContext.getResources().getColor(R.color.green));
         }else{
-            baseViewHolder.setBackgroundColor(R.id.tv_type, R.color.red);
+            baseViewHolder.setTextColor(R.id.tv_status,  mContext.getResources().getColor(R.color.red));
         }
         if (data.getFlag_plan() == 0) {
-            baseViewHolder.setBackgroundColor(R.id.tv_type, R.color.black_30);
+            baseViewHolder.setBackgroundColor(R.id.tv_type, mContext.getResources().getColor(R.color.black_54));
         } else {
-            baseViewHolder.setBackgroundColor(R.id.tv_type, R.color.red);
+            baseViewHolder.setBackgroundColor(R.id.tv_type,  mContext.getResources().getColor(R.color.red));
         }
         baseViewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
             @Override

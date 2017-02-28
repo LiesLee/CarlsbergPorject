@@ -1,5 +1,6 @@
 package com.carlsberg.app.module.visit.view;
 
+import com.carlsberg.app.bean.visit.VisitStoreResponse;
 import com.common.base.ui.BaseView;
 
 /**
@@ -7,4 +8,5 @@ import com.common.base.ui.BaseView;
  */
 
 public interface StoreVisitView extends BaseView {
+    void loadDataDone(VisitStoreResponse data);
 }

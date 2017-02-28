@@ -3,6 +3,7 @@ package com.carlsberg.app.http.protocol;
 import com.carlsberg.app.application.CarlsbergAppcation;
 import com.carlsberg.app.bean.common.User;
 import com.carlsberg.app.bean.visit.VisitRespone;
+import com.carlsberg.app.bean.visit.VisitStoreResponse;
 import com.carlsberg.app.http.manager.RetrofitManager;
 import com.common.http.HostType;
 import com.common.http.HttpResult;
@@ -35,6 +36,21 @@ public class VisitProtocol extends BaseProtocol {
         params.put("page", page);
         return RetrofitManager.getInstance(HostType.USER_HOST).getVisitService()
                 .storePlan(createPatams(params, showType == 0 ? "recentPlan" : "storePlan"))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()) //返回结果处理线程
+                .unsubscribeOn(Schedulers.io());
+    }
+    /**
+     * 拜访门店
+     * @param store_id
+     * @return
+     */
+    public static Observable<HttpResult<VisitStoreResponse>> storeView(String store_id){
+        Map<String, Object> params = new HashMap<>();
+        params.put("store_id", store_id);
+        params.put("user_id", CarlsbergAppcation.getInstance().getUser().getUser_info().getUser_id());
+        return RetrofitManager.getInstance(HostType.USER_HOST).getVisitService()
+                .storeView(createPatams(params, "storeView"))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()) //返回结果处理线程
                 .unsubscribeOn(Schedulers.io());
