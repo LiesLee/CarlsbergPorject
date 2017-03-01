@@ -7,13 +7,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.carlsberg.app.R;
+import com.carlsberg.app.bean.visit.PhotoListBean;
 import com.carlsberg.app.module.home.ui.adapter.LatelyVisitedAdapter;
+import com.carlsberg.app.module.visit.ui.adapter.DynamicImgsAdapter;
+import com.carlsberg.app.module.visit.ui.adapter.PublishDynamicImgsAdapter;
 import com.carlsberg.app.module.visit.ui.adapter.StorePicturesAdapter;
 import com.common.annotation.ActivityFragmentInject;
 import com.common.base.presenter.BasePresenterImpl;
 import com.common.base.ui.BaseFragment;
 import com.common.base.ui.BaseView;
 import com.views.util.RefreshUtil;
+
+import java.util.List;
 
 import butterknife.Bind;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
@@ -27,8 +32,6 @@ import ru.noties.scrollable.OnFlingOverListener;
 @ActivityFragmentInject(contentViewId = R.layout.fra_store_picture)
 public class StorePictureFragment extends ScrollableBaseFragment<BasePresenterImpl> {
 
-//    @Bind(R.id.pcfl_pull_to_refresh)
-//    PtrClassicFrameLayout pcfl_pull_to_refresh;
     @Bind(R.id.rv_list)
     RecyclerView rv_list;
 
@@ -36,6 +39,7 @@ public class StorePictureFragment extends ScrollableBaseFragment<BasePresenterIm
     LinearLayoutManager mLinearLayoutManager;
 
     StorePicturesAdapter storePicturesAdapter;
+    private List<PhotoListBean> picList;
 
 
     @Override
@@ -46,30 +50,19 @@ public class StorePictureFragment extends ScrollableBaseFragment<BasePresenterIm
                 return false;
             }
         });
-//        //initialize Refresh layout
-//        RefreshUtil.init_material_pull(baseActivity, pcfl_pull_to_refresh, new RefreshUtil.PtrRefreshListener() {
-//            @Override
-//            public void OnRefresh(final PtrFrameLayout frame) {
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        pcfl_pull_to_refresh.refreshComplete();
-//                    }
-//                }, 3000);
-//            }
-//        });
 
         mLinearLayoutManager = new LinearLayoutManager(baseActivity);
         rv_list.setLayoutManager(mLinearLayoutManager);
         storePicturesAdapter = new StorePicturesAdapter(baseActivity, null);
         rv_list.setAdapter(storePicturesAdapter);
 
-//        RefreshUtil.autoRefresh(pcfl_pull_to_refresh);
     }
 
     @Override
     public void initData() {
-
+        if(picList!=null){
+            refreshPictures(picList);
+        }
     }
 
     /**
@@ -98,4 +91,25 @@ public class StorePictureFragment extends ScrollableBaseFragment<BasePresenterIm
     public CharSequence getTitle() {
         return "门店照片";
     }
+
+    public void refreshPictures(List<PhotoListBean> picList){
+        if(storePicturesAdapter==null) return;
+
+        this.picList = picList;
+
+        if(picList!=null && picList.size() > 0){
+            for(int i = 0; i < picList.size() ; i++){
+                DynamicImgsAdapter imgsAdapter = new DynamicImgsAdapter(baseActivity);
+                imgsAdapter.setImgs(picList.get(i).getLists());
+                picList.get(i).setImgsAdapter_2(imgsAdapter);
+            }
+            storePicturesAdapter.setData(picList);
+        }else {
+            storePicturesAdapter.setData(null);
+        }
+
+
+    }
+
+
 }

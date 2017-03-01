@@ -34,4 +34,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapterExt {
     public boolean canScrollVertically(int position, int direction) {
         return getItem(position).canScrollVertically(direction);
     }
+
+    public List<ScrollableBaseFragment> getmFragments() {
+        return mFragments;
+    }
 }

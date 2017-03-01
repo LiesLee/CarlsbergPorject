@@ -1,5 +1,6 @@
 package com.carlsberg.app.module.visit.ui.adapter;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.carlsberg.app.R;
+import com.carlsberg.app.bean.visit.PhotoListBean;
 import com.carlsberg.app.utils.GlideUtil;
 import com.carlsberg.app.utils.UIHelper;
 import com.common.base.ui.BaseActivity;
+import com.views.ImageActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +23,7 @@ import java.util.List;
  */
 public class DynamicImgsAdapter extends RecyclerView.Adapter<DynamicImgsAdapter.Holder> {
 
-    ArrayList<Uri> imgs = new ArrayList<>();
+    List<PhotoListBean.Image> imgs = new ArrayList<>();
     BaseActivity baseActivity;
 
     public DynamicImgsAdapter(BaseActivity baseActivity) {
@@ -36,21 +39,34 @@ public class DynamicImgsAdapter extends RecyclerView.Adapter<DynamicImgsAdapter.
     public void onBindViewHolder(Holder holder, final int position) {
 
         holder.iv_remove_imgs.setVisibility(View.GONE);
-        holder.iv_publish_dynamic_imgs.setImageResource(R.mipmap.bg_default);
+        GlideUtil.loadImage(baseActivity ,imgs.get(position).getImage_url(), holder.iv_publish_dynamic_imgs);
+        holder.iv_publish_dynamic_imgs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<String> imgsUrl = new ArrayList<String>();
+                for (int i=0; i < imgs.size(); i++){
+                    imgsUrl.add(imgs.get(i).getImage_url());
+                }
+                Intent intent = new Intent(baseActivity, ImageActivity.class);
+                intent.putStringArrayListExtra("imgUrls", imgsUrl);
+                intent.putExtra("pagerPosition", position);
+                baseActivity.startActivity(intent);
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return imgs == null ? 0 : imgs.size();
     }
 
 
-    public List<Uri> getImgs() {
+    public List<PhotoListBean.Image> getImgs() {
         return imgs;
     }
 
-    public void setImgs(ArrayList<Uri> imgs) {
+    public void setImgs(List<PhotoListBean.Image> imgs) {
         this.imgs = imgs;
         notifyDataSetChanged();
     }

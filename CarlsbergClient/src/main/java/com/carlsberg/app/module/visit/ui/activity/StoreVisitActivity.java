@@ -252,6 +252,7 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
     @Override
     public void loadDataDone(VisitStoreResponse data) {
         if(data!=null){
+            //头部文字排版
             tv_name.setText(data.getStore_task().getStore_name());
             tv_type.setText(data.getStore_task().getFlag_plan_title());
             tv_status.setText(data.getStore_task().getTask_status_title());
@@ -277,6 +278,7 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
             tv_checkin_date.setText("入店时间：" + data.getStore_task().getCheckin_date());
             tv_goaway_date.setText("离店时间：" + data.getStore_task().getGoaway_date());
 
+            //按钮适配
             if(data.getTask_button()!=null && data.getTask_button().size() >0){
                 ll_task_btn.setVisibility(View.VISIBLE);
                 for(VisitStoreResponse.TaskButton taskButton : data.getTask_button()){
@@ -306,6 +308,9 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
                 ll_task_btn.setVisibility(View.GONE);
             }
 
+            //viewpager数据
+            StorePictureFragment f1 = (StorePictureFragment) adapter.getmFragments().get(0);
+            f1.refreshPictures(data.getTask_photo());
 
         }
     }
