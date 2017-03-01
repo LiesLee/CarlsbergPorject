@@ -97,14 +97,16 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
     Handler handler;
     private String store_id;
     private String store_name;
+    private String task_id;
 
 
     @Override
     protected void initView() {
         mPresenter = new StoreVisitPresenter(this);
         store_id = getIntent().getStringExtra("store_id");
+        task_id = getIntent().getStringExtra("task_id");
         store_name = getIntent().getStringExtra("store_name");
-        if(TextUtils.isEmpty(store_id)){
+        if(TextUtils.isEmpty(store_id) || TextUtils.isEmpty(task_id)){
             finish();
             ToastUtil.showShortToast(baseActivity, "ID数据为空");
             return;
@@ -124,7 +126,7 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
         RefreshUtil.init_material_pull(baseActivity, pcfl_pull_to_refresh, new RefreshUtil.PtrRefreshListener() {
             @Override
             public void OnRefresh(final PtrFrameLayout frame) {
-                mPresenter.storeView(store_id);
+                mPresenter.storeView(store_id, task_id);
             }
         });
 
@@ -213,7 +215,7 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_sign_in :
-
+                mPresenter.taskSign(store_id, task_id, "checkin");
                 break;
 
             case R.id.tv_data_collect :
@@ -221,7 +223,7 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
                 break;
 
             case R.id.tv_clock_off :
-
+                mPresenter.taskSign(store_id, task_id, "goaway");
                 break;
 
             case R.id.tv_take_a_photo :
@@ -302,5 +304,13 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
 
 
         }
+    }
+
+    /**
+     * 打卡成功
+     */
+    @Override
+    public void taskSignSuccessed() {
+        mPresenter.storeView(store_id, task_id);
     }
 }

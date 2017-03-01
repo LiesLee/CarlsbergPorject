@@ -22,9 +22,9 @@ public class StoreVisitPresenter extends BasePresenterImpl<StoreVisitView> {
         super(view);
     }
 
-    public void storeView(String store_id){
+    public void storeView(String store_id, String task_id){
         HttpSubscibe.subscibe(CarlsbergAppcation.getInstance(), AndroidSchedulers.mainThread(),
-                VisitProtocol.storeView(store_id), null, mView, new RequestCallback<VisitStoreResponse>() {
+                VisitProtocol.storeView(store_id, task_id), null, mView, new RequestCallback<VisitStoreResponse>() {
                     @Override
                     public void beforeRequest() {
                         mView.showProgress(Constant.PROGRESS_TYPE_LIST);
@@ -52,5 +52,37 @@ public class StoreVisitPresenter extends BasePresenterImpl<StoreVisitView> {
                     }
                 });
     }
+
+    public void taskSign(String store_id, String task_id, String sigin_type){
+        HttpSubscibe.subscibe(CarlsbergAppcation.getInstance(), AndroidSchedulers.mainThread(),
+                VisitProtocol.taskSign(store_id, task_id, sigin_type), null, mView, new RequestCallback<String>() {
+                    @Override
+                    public void beforeRequest() {
+                        mView.showProgress(Constant.PROGRESS_TYPE_DIALOG);
+                    }
+
+                    @Override
+                    public void requestError(int code, String msg) {
+                        if (code == 0) {
+                            mView.hideProgress(Constant.PROGRESS_TYPE_DIALOG);
+                            mView.toast("网络失败异常,请稍后再试");
+                        } else {
+                            mView.toast(msg);
+                        }
+                    }
+
+                    @Override
+                    public void requestComplete() {
+                        mView.hideProgress(Constant.PROGRESS_TYPE_DIALOG);
+                    }
+
+                    @Override
+                    public void requestSuccess(String data) {
+                        mView.taskSignSuccessed();
+                    }
+                });
+    }
+
+
 
 }

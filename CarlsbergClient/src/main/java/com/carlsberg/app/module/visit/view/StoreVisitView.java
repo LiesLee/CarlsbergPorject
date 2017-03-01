@@ -9,4 +9,5 @@ import com.common.base.ui.BaseView;
 
 public interface StoreVisitView extends BaseView {
     void loadDataDone(VisitStoreResponse data);
+    void taskSignSuccessed();
 }

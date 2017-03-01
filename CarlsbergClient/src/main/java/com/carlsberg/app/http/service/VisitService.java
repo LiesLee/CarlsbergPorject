@@ -33,4 +33,12 @@ public interface VisitService {
     @FormUrlEncoded
     @POST("api.php")
     Observable<HttpResult<VisitStoreResponse>> storeView(@FieldMap SortedMap<String, Object> storePlan);
+    /**
+     * 打卡
+     * @param storePlan
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api.php")
+    Observable<HttpResult<String>> taskSign(@FieldMap SortedMap<String, Object> storePlan);
 }

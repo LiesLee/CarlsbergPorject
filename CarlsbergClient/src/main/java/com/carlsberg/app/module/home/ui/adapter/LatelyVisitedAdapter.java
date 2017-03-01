@@ -49,6 +49,7 @@ public class LatelyVisitedAdapter extends BaseAdapter<Visit> {
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, StoreVisitActivity.class);
                 intent.putExtra("store_id", data.getStore_id());
+                intent.putExtra("task_id", data.getTask_id());
                 intent.putExtra("store_name", data.getStore_name());
                 mContext.startActivity(intent);
             }

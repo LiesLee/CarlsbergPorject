@@ -25,7 +25,7 @@ public class Visit {
     private String region_title;
     private int flag_plan;
     private String flag_plan_title;
-    private int task_id;
+    private String task_id;
     private int plan_id;
     private int plan_asort;
     private int task_status;
@@ -79,11 +79,11 @@ public class Visit {
         this.flag_plan_title = flag_plan_title;
     }
 
-    public int getTask_id() {
+    public String getTask_id() {
         return task_id;
     }
 
-    public void setTask_id(int task_id) {
+    public void setTask_id(String task_id) {
         this.task_id = task_id;
     }
 
