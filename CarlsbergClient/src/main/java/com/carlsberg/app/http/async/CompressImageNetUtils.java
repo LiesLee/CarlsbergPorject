@@ -2,7 +2,9 @@ package com.carlsberg.app.http.async;
 
 import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.carlsberg.app.application.CarlsbergAppcation;
+import com.carlsberg.app.bean.common.ImageUploadResponse;
 import com.carlsberg.app.http.HttpConstants;
 import com.carlsberg.app.http.protocol.BaseProtocol;
 import com.common.base.ui.BaseActivity;
@@ -62,19 +64,14 @@ public class CompressImageNetUtils {
                         e.printStackTrace();
                     }
 
-                    httpClient.post("api.php", params, new ManagerResponseHandler<String>(baseAct) {
+                    httpClient.post("api.php", params, new ManagerResponseHandler<JSONObject>(baseAct) {
                         @Override
-                        public void onSuccess(final int code, final String msg, final String data) {
+                        public void onSuccess(final int code, final String msg, final JSONObject data) {
                             baseAct.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     if(code == HttpConstants.REQUEST_SUCESS){
-                                        if (!TextUtils.isEmpty(data)) {
-                                            callBack.callBack(true, data);
-                                        } else {
-                                            callBack.callBack(false, "");
-                                            ToastUtil.showShortToast(baseAct, "上传返回，请稍候再试");
-                                        }
+                                        callBack.callBack(true, "");
                                     }else{
                                         callBack.callBack(false, "");
                                         ToastUtil.showShortToast(baseAct, msg);

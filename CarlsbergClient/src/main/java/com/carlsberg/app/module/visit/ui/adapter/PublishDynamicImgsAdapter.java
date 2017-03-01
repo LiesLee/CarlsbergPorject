@@ -1,5 +1,6 @@
 package com.carlsberg.app.module.visit.ui.adapter;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import com.carlsberg.app.bean.visit.PhotoListBean;
 import com.carlsberg.app.utils.GlideUtil;
 import com.carlsberg.app.utils.UIHelper;
 import com.common.base.ui.BaseActivity;
+import com.views.ImageActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +57,20 @@ public class PublishDynamicImgsAdapter extends RecyclerView.Adapter<PublishDynam
                 @Override
                 public void onClick(View v) {
                     callBack.onImgDelete(holder.getAdapterPosition(), PublishDynamicImgsAdapter.this);
+                }
+            });
+
+            holder.iv_publish_dynamic_imgs.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ArrayList<String> imgsUrl = new ArrayList<String>();
+                    for (int i=0; i < imgs.size(); i++){
+                        imgsUrl.add(imgs.get(i).getImage_url());
+                    }
+                    Intent intent = new Intent(baseActivity, ImageActivity.class);
+                    intent.putStringArrayListExtra("imgUrls", imgsUrl);
+                    intent.putExtra("pagerPosition", position);
+                    baseActivity.startActivity(intent);
                 }
             });
         }

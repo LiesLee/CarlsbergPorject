@@ -407,7 +407,7 @@ public class FileSizeUtil {
     public static String compressBitmap(Context context, String srcPath,
                                         Bitmap.CompressFormat format,
                                         int rqsW, int rqsH, boolean isDelSrc) {
-        if (FileSizeUtil.getFileOrFilesSize(srcPath,FileSizeUtil.SIZETYPE_KB)> 500) {
+        if (FileSizeUtil.getFileOrFilesSize(srcPath,FileSizeUtil.SIZETYPE_KB)> 300) {
             Bitmap bitmap = compressBitmap(srcPath, rqsW, rqsH);
             File srcFile = new File(srcPath);
             String desPath = getImageCacheDir(context) + srcFile.getName();

@@ -16,6 +16,7 @@ import org.apache.http.conn.ConnectTimeoutException;
 import java.net.SocketTimeoutException;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.client.HttpResponseException;
 
 /**
  */
@@ -65,11 +66,19 @@ public abstract class ManagerResponseHandler<T> extends AsyncHttpResponseHandler
         } else if (throwable instanceof ConnectTimeoutException ||
                 throwable instanceof SocketTimeoutException) {//连接/请求超时提示错误
             networkError();
+        } else if ( throwable instanceof cz.msebera.android.httpclient.client.HttpResponseException) {//响应失败
+            HttpResponseException exception = (HttpResponseException) throwable;
+            KLog.e("error:" + exception.getMessage());
+            ToastUtil.showShortToast(context, "网络异常");//是否提示toast
+            networkError();
         } else {
             KLog.e("context=" + context);
+            KLog.e("exception : " + throwable.getMessage());
             ToastUtil.showShortToast(context, "网络异常");//是否提示toast
             networkError();
         }
+
+
     }
 
     protected void networkError() {

@@ -77,8 +77,13 @@ public class PicCompress {
                             DensityUtils.getWindowHeight(act));
                     int imgMax = Math.max(options.outWidth, options.outHeight);
                     int inSimpleSize = 1;
-                    if (screenMax <= imgMax) {
-                        inSimpleSize = Math.max(screenMax, imgMax) / Math.min(screenMax, imgMax);
+                    if(imgMax >= 1000){
+                        inSimpleSize = (imgMax / 1000);
+                        if(inSimpleSize > 2){
+                            inSimpleSize = 3;
+                        }else if(inSimpleSize > 4){
+                            inSimpleSize = 4;
+                        }
                     }
                     //压缩
                     final String picString = FileSizeUtil.compressBitmap(act,

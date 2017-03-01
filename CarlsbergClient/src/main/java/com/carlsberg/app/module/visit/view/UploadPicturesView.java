@@ -9,4 +9,6 @@ import com.common.base.ui.BaseView;
 
 public interface UploadPicturesView extends BaseView{
     void loadPicturesDone(VisitStoreResponse data);
+
+    void deleteImgSuccessed();
 }

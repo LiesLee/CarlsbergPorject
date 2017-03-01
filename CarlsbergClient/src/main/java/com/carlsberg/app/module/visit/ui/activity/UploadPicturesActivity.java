@@ -99,8 +99,8 @@ public class UploadPicturesActivity extends BaseActivity<UploadPicturesPresenter
     public void onImgDelete(int position, PublishDynamicImgsAdapter mAdapter) {
         this.deletePosition = position;
         this.imgsAdapter = mAdapter;
-        mAdapter.notifyItemRemoved(deletePosition);
-        mAdapter.getImgs().remove(deletePosition);
+        //删除照片
+        mPresenter.delPhoto(store_id, task_id, mAdapter.getImgs().get(position).getImage_id());
     }
 
     @Override
@@ -124,6 +124,7 @@ public class UploadPicturesActivity extends BaseActivity<UploadPicturesPresenter
                     @Override
                     public void callBack(boolean isSuccess, String imagePath) {
                         if(isSuccess){
+                            ToastUtil.showShortToast(baseActivity, "上传成功");
                             mPresenter.loadPictures(store_id, task_id);
                         }else{
                             hideProgress(Constant.PROGRESS_TYPE_DIALOG);
@@ -141,11 +142,19 @@ public class UploadPicturesActivity extends BaseActivity<UploadPicturesPresenter
             for(int i = 0; i < picList.size() ; i++){
                 PublishDynamicImgsAdapter imgsAdapter = new PublishDynamicImgsAdapter(baseActivity, this);
                 imgsAdapter.setPhoto_type(picList.get(i).getPhoto_type());
+                imgsAdapter.setImgs(picList.get(i).getLists());
                 picList.get(i).setImgsAdapter(imgsAdapter);
             }
             uploadPicturesAdapter.setData(picList);
         }else {
             uploadPicturesAdapter.setData(null);
         }
+    }
+
+    @Override
+    public void deleteImgSuccessed() {
+
+        imgsAdapter.notifyItemRemoved(deletePosition);
+        imgsAdapter.getImgs().remove(deletePosition);
     }
 }

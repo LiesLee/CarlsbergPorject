@@ -91,4 +91,17 @@ public class VisitProtocol extends BaseProtocol {
                 .observeOn(AndroidSchedulers.mainThread()) //返回结果处理线程
                 .unsubscribeOn(Schedulers.io());
     }
+
+    public static Observable<HttpResult<String>> delPhoto(String store_id, String task_id, String image_id) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("store_id", store_id);
+        params.put("task_id", task_id);
+        params.put("image_id", image_id);
+        params.put("user_id", CarlsbergAppcation.getInstance().getUser().getUser_info().getUser_id());
+        return RetrofitManager.getInstance(HostType.USER_HOST).getVisitService()
+                .taskSign(createPatams(params, "delPhoto"))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()) //返回结果处理线程
+                .unsubscribeOn(Schedulers.io());
+    }
 }

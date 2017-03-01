@@ -50,4 +50,35 @@ public class UploadPicturesPresenter extends BasePresenterImpl<UploadPicturesVie
                     }
                 });
     }
+
+    public void delPhoto(String store_id, String task_id, String image_id){
+        HttpSubscibe.subscibe(CarlsbergAppcation.getInstance(), AndroidSchedulers.mainThread(),
+                VisitProtocol.delPhoto(store_id, task_id, image_id), null, mView, new RequestCallback<String>() {
+                    @Override
+                    public void beforeRequest() {
+                        mView.showProgress(Constant.PROGRESS_TYPE_DIALOG);
+                    }
+
+                    @Override
+                    public void requestError(int code, String msg) {
+                        if (code == 0) {
+                            mView.hideProgress(Constant.PROGRESS_TYPE_DIALOG);
+                            mView.toast("网络失败异常,请稍后再试");
+                        } else {
+                            mView.toast(msg);
+                        }
+                    }
+
+                    @Override
+                    public void requestComplete() {
+                        mView.hideProgress(Constant.PROGRESS_TYPE_DIALOG);
+                    }
+
+                    @Override
+                    public void requestSuccess(String data) {
+                        mView.toast("删除成功");
+                        mView.deleteImgSuccessed();
+                    }
+                });
+    }
 }
