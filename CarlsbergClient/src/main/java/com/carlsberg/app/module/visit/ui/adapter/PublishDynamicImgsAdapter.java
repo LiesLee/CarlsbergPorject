@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.carlsberg.app.R;
+import com.carlsberg.app.bean.visit.PhotoListBean;
 import com.carlsberg.app.utils.GlideUtil;
 import com.carlsberg.app.utils.UIHelper;
 import com.common.base.ui.BaseActivity;
@@ -21,8 +22,9 @@ import java.util.List;
 public class PublishDynamicImgsAdapter extends RecyclerView.Adapter<PublishDynamicImgsAdapter.Holder> {
 
     private UIHelper.TakePictureSavePathCallBack callBack;
-    ArrayList<Uri> imgs = new ArrayList<>();
+    List<PhotoListBean.Image> imgs = new ArrayList<>();
     BaseActivity baseActivity;
+    private int photo_type;
 
     public PublishDynamicImgsAdapter(BaseActivity baseActivity, UIHelper.TakePictureSavePathCallBack callBack) {
         this.baseActivity = baseActivity;
@@ -47,7 +49,7 @@ public class PublishDynamicImgsAdapter extends RecyclerView.Adapter<PublishDynam
             holder.iv_remove_imgs.setVisibility(View.GONE);
 
         }else{
-            GlideUtil.loadImage(baseActivity,imgs.get(position).toString(), holder.iv_publish_dynamic_imgs);
+            GlideUtil.loadImage(baseActivity,imgs.get(position).getImage_url(), holder.iv_publish_dynamic_imgs);
             holder.iv_remove_imgs.setVisibility(View.VISIBLE);
             holder.iv_remove_imgs.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -73,20 +75,12 @@ public class PublishDynamicImgsAdapter extends RecyclerView.Adapter<PublishDynam
     }
 
 
-    public List<Uri> getImgs() {
+    public List<PhotoListBean.Image> getImgs() {
         return imgs;
     }
 
-    public void setImgs(ArrayList<Uri> imgs) {
+    public void setImgs(List<PhotoListBean.Image> imgs) {
         this.imgs = imgs;
-        notifyDataSetChanged();
-    }
-
-    public void addImgs(Uri imgUri){
-        if(imgs == null){
-            imgs = new ArrayList<>();
-        }
-        imgs.add(imgUri);
         notifyDataSetChanged();
     }
 
@@ -102,5 +96,11 @@ public class PublishDynamicImgsAdapter extends RecyclerView.Adapter<PublishDynam
 
     }
 
+    public int getPhoto_type() {
+        return photo_type;
+    }
 
+    public void setPhoto_type(int photo_type) {
+        this.photo_type = photo_type;
+    }
 }

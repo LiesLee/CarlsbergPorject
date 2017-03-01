@@ -11,6 +11,7 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/tv_photo_title"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="4dp"

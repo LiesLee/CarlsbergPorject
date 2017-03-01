@@ -2,6 +2,7 @@ package com.carlsberg.app.http.async;
 
 import android.text.TextUtils;
 
+import com.carlsberg.app.application.CarlsbergAppcation;
 import com.carlsberg.app.http.HttpConstants;
 import com.carlsberg.app.http.protocol.BaseProtocol;
 import com.common.base.ui.BaseActivity;
@@ -33,41 +34,35 @@ public class CompressImageNetUtils {
     /**
      * @param baseAct
      * @param arrayImage
-     * @param type  上传类型:
-     *                  avatar:个人头像上传1张,
-     *                  evaluate:店铺评论相片上传可多张,
-     *                  clubshare:分享动态图片上传可多张,
+     *
      * @param callBack   压缩多张图片 返回上传图片返回的List<String>
      */
-    public static void getCompressImge(final BaseActivity baseAct, ArrayList<String> arrayImage, final String type, final HandlerPicSingleCompressBack callBack) {
+    public static void getCompressImge(final BaseActivity baseAct, ArrayList<String> arrayImage, final String store_id, final String task_id, final String image_type, final HandlerPicSingleCompressBack callBack) {
 
         PicCompress.CompressImage(arrayImage, baseAct, new PicCompress.HandlePicArrayCompressCallBack() {
             @Override
             public void callBack(boolean isSuccess, List<String> picpaths) {
                 if (isSuccess) {
                     ManagerHttpClient httpClient = ManagerHttpClient.getsInstance(baseAct);
-
                     Map<String, String> map = new HashMap<>();
-                    map.put("uptype", type);
-
+                    map.put("store_id", store_id);
+                    map.put("task_id", task_id);
+                    map.put("image_type", image_type);
+                    map.put("user_id", CarlsbergAppcation.getInstance().getUser().getUser_info().getUser_id());
                     RequestParams params = new RequestParams(BaseProtocol.createPatams1(map, "addPhoto"));
-
-                    //File[] images = new File[picpaths.size()];
                     try{
-                        for (int i = 0; i < picpaths.size(); i++) {
-                            //images[i] = new File(picpaths.get(i));
-                            params.put("upfile["+i+"]", new File(picpaths.get(i)));
+                        if(picpaths.size() == 1){
+                            params.put("image_file", new File(picpaths.get(0)), "image/jpg");
+                        }else{
+                            for (int i = 0; i < picpaths.size(); i++) {
+                                params.put("image_file["+i+"]", new File(picpaths.get(i)));
+                            }
                         }
                     }catch (Exception e){
                         e.printStackTrace();
                     }
-//                    try {
-//                        params.put("upfile", images);
-//                    } catch (FileNotFoundException e1) {
-//                        e1.printStackTrace();
-//                    }
 
-                    httpClient.post("/image/upload", params, new ManagerResponseHandler<String>(baseAct) {
+                    httpClient.post("api.php", params, new ManagerResponseHandler<String>(baseAct) {
                         @Override
                         public void onSuccess(final int code, final String msg, final String data) {
                             baseAct.runOnUiThread(new Runnable() {

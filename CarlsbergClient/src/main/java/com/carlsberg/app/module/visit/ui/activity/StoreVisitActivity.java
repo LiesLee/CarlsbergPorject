@@ -227,7 +227,11 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
                 break;
 
             case R.id.tv_take_a_photo :
-                startActivity(new Intent(baseActivity, UploadPicturesActivity.class));
+                Intent intent = new Intent(baseActivity, UploadPicturesActivity.class);
+                intent.putExtra("store_id", store_id);
+                intent.putExtra("task_id", task_id);
+                intent.putExtra("store_name", store_name);
+                startActivity(intent);
                 break;
 
             default:

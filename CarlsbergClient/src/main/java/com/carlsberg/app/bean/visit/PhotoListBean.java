@@ -1,5 +1,7 @@
 package com.carlsberg.app.bean.visit;
 
+import com.carlsberg.app.module.visit.ui.adapter.PublishDynamicImgsAdapter;
+
 import java.util.List;
 
 /**
@@ -17,6 +19,15 @@ public class PhotoListBean {
     private int photo_type;
     private String photo_title;
     private List<Image> lists;
+    private PublishDynamicImgsAdapter imgsAdapter;
+
+    public PublishDynamicImgsAdapter getImgsAdapter() {
+        return imgsAdapter;
+    }
+
+    public void setImgsAdapter(PublishDynamicImgsAdapter imgsAdapter) {
+        this.imgsAdapter = imgsAdapter;
+    }
 
     public int getPhoto_type() {
         return photo_type;

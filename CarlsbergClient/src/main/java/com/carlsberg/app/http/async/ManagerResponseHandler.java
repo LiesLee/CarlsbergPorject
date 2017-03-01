@@ -4,6 +4,8 @@ import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.common.utils.FastJsonUtil;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.socks.library.KLog;
@@ -35,21 +37,10 @@ public abstract class ManagerResponseHandler<T> extends AsyncHttpResponseHandler
 
         if (!TextUtils.isEmpty(content)) {
             //处理json解析
-            jsonResult = FastJsonUtil.json2T(content, JsonResult.class);
+            jsonResult = JSON.parseObject(content, new TypeReference<JsonResult<T>>(){});
             if (jsonResult != null) {
                 if(jsonResult.status == 201){
                     onFailure(new Throwable());
-//                    CustomerAppcation.getInstance().getHandler().post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            ToastUtil.showLongToast(context,"登录状态失效，请重新登录！");
-//                            ShiHuiActivityManager.getInstance().cleanActivity();
-//                            CustomerAppcation.getInstance().setUserInfo(null);
-//                            SpUtil.remove(Constant.USER_JSON);
-//                            //context.startActivity(new Intent(context, LoginActivity.class));
-//                        }
-//                    });
-
                 }else{
                     onSuccess(jsonResult.status, jsonResult.msg, jsonResult.data);
                 }

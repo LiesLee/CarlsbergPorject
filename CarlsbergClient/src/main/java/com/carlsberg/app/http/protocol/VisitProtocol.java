@@ -57,6 +57,22 @@ public class VisitProtocol extends BaseProtocol {
                 .unsubscribeOn(Schedulers.io());
     }
     /**
+     * 获取图片
+     * @param store_id
+     * @return
+     */
+    public static Observable<HttpResult<VisitStoreResponse>> getPhoto(String store_id, String task_id){
+        Map<String, Object> params = new HashMap<>();
+        params.put("store_id", store_id);
+        params.put("task_id", task_id);
+        params.put("user_id", CarlsbergAppcation.getInstance().getUser().getUser_info().getUser_id());
+        return RetrofitManager.getInstance(HostType.USER_HOST).getVisitService()
+                .storeView(createPatams(params, "getPhoto"))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()) //返回结果处理线程
+                .unsubscribeOn(Schedulers.io());
+    }
+    /**
      * 打卡
      * @param store_id
      * @param task_id
