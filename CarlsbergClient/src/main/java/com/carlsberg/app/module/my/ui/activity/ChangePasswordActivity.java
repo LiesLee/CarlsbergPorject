@@ -1,5 +1,6 @@
 package com.carlsberg.app.module.my.ui.activity;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -8,8 +9,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.carlsberg.app.R;
+import com.carlsberg.app.application.CarlsbergAppcation;
 import com.carlsberg.app.bean.common.User;
+import com.carlsberg.app.module.common.ui.activity.LoginActivity;
+import com.carlsberg.app.module.my.persenter.ChangePasswordPresenter;
+import com.carlsberg.app.module.my.view.ModifyInfoView;
 import com.carlsberg.app.utils.UIHelper;
+import com.common.ShiHuiActivityManager;
 import com.common.annotation.ActivityFragmentInject;
 import com.common.base.presenter.BasePresenterImpl;
 import com.common.base.ui.BaseActivity;
@@ -19,7 +25,7 @@ import butterknife.Bind;
 
 
 @ActivityFragmentInject(contentViewId = R.layout.act_forget_pass, toolbarTitle = R.string.change_password)
-public class ChangePasswordActivity extends BaseActivity<BasePresenterImpl> implements BaseView {
+public class ChangePasswordActivity extends BaseActivity<ChangePasswordPresenter> implements ModifyInfoView {
 
     @Bind(R.id.tv_send)
     TextView tv_send;
@@ -39,7 +45,7 @@ public class ChangePasswordActivity extends BaseActivity<BasePresenterImpl> impl
 
     @Override
     protected void initView() {
-
+        mPresenter = new ChangePasswordPresenter(this);
         et_new_pass_confirm.setOnKeyListener(new View.OnKeyListener() {
 
             @Override
@@ -63,11 +69,9 @@ public class ChangePasswordActivity extends BaseActivity<BasePresenterImpl> impl
         et_phone.setFocusable(false);
         et_phone.setEnabled(false);
         et_phone.setClickable(false);
-        //et_phone.setText(CarlsbergAppcation.getInstance().getUser().getInfo().getMobile());
-        et_phone.setText("12345678999");
+        et_phone.setText(CarlsbergAppcation.getInstance().getUser().getUser_info().getMobile());
         tv_send.setOnClickListener(this);
 
-        //mPresenter = new ChangePasswordPresenter(this);
     }
 
     @Override
@@ -85,7 +89,7 @@ public class ChangePasswordActivity extends BaseActivity<BasePresenterImpl> impl
         switch (v.getId()) {
             case R.id.tv_send:
                 if(check()){
-                    //mPresenter.change(password, new_password);
+                    mPresenter.changePassword(old_password, new_password, new_password_confirm);
                 }
                 break;
         }
@@ -97,8 +101,6 @@ public class ChangePasswordActivity extends BaseActivity<BasePresenterImpl> impl
 
 
     boolean check() {
-        //phone = CarlsbergAppcation.getInstance().getUser().getInfo().getMobile_encode();
-        phone = "1234566778999";
         old_password = et_old_password.getText().toString();
         new_password = et_new_password.getText().toString();
         new_password_confirm = et_new_pass_confirm.getText().toString();
@@ -134,4 +136,11 @@ public class ChangePasswordActivity extends BaseActivity<BasePresenterImpl> impl
     }
 
 
+    @Override
+    public void modifySuccessed() {
+        showLongToast("修改成功，请重新登录！");
+        CarlsbergAppcation.getInstance().setUser(null);
+        ShiHuiActivityManager.getInstance().cleanActivity();
+        startActivity(new Intent(baseActivity, LoginActivity.class));
+    }
 }

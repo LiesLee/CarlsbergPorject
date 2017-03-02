@@ -6,6 +6,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.carlsberg.app.R;
+import com.carlsberg.app.application.CarlsbergAppcation;
+import com.carlsberg.app.module.my.persenter.ModifyInfoPresenter;
+import com.carlsberg.app.module.my.view.ModifyInfoView;
 import com.carlsberg.app.utils.UIHelper;
 import com.common.annotation.ActivityFragmentInject;
 import com.common.base.presenter.BasePresenterImpl;
@@ -16,12 +19,13 @@ import butterknife.Bind;
 
 import static com.carlsberg.app.R.id.et_new_password;
 import static com.carlsberg.app.R.id.et_old_password;
+import static com.carlsberg.app.R.id.tv_name;
 
 /**
  * Created by LiesLee on 17/2/16.
  */
 @ActivityFragmentInject(contentViewId = R.layout.act_modify_user_info, toolbarTitle = R.string.modify_user_info)
-public class ModifyInfoActivity extends BaseActivity<BasePresenterImpl> implements BaseView {
+public class ModifyInfoActivity extends BaseActivity<ModifyInfoPresenter> implements ModifyInfoView {
     @Bind(R.id.tv_phone)
     TextView tv_phone;
     @Bind(R.id.tv_save)
@@ -36,16 +40,18 @@ public class ModifyInfoActivity extends BaseActivity<BasePresenterImpl> implemen
     private String name;
     private String email;
     private String address;
-    private String phone;
 
     @Override
     protected void initView() {
+        mPresenter = new ModifyInfoPresenter(this);
         tv_save.setOnClickListener(this);
     }
 
     @Override
     public void initData() {
-        tv_phone.setText("12345678999");
+        tv_phone.setText(CarlsbergAppcation.getInstance().getUser().getUser_info().getMobile());
+        et_name.setText(CarlsbergAppcation.getInstance().getUser().getUser_info().getNick_name());
+        et_email.setText(CarlsbergAppcation.getInstance().getUser().getUser_info().getEmail());
     }
 
     @Override
@@ -58,7 +64,7 @@ public class ModifyInfoActivity extends BaseActivity<BasePresenterImpl> implemen
         switch (v.getId()) {
             case R.id.tv_save :
                     if(check()){
-
+                        mPresenter.changeUserInfo(name, email, address);
                     }
                 break;
 
@@ -69,8 +75,6 @@ public class ModifyInfoActivity extends BaseActivity<BasePresenterImpl> implemen
 
 
     boolean check() {
-        phone = "12345678999";
-
         name = et_name.getText().toString();
         email = et_email.getText().toString();
         address = et_address.getText().toString();
@@ -86,4 +90,9 @@ public class ModifyInfoActivity extends BaseActivity<BasePresenterImpl> implemen
         return true;
     }
 
+    @Override
+    public void modifySuccessed() {
+        showShortToast("修改成功");
+        finish();
+    }
 }

@@ -25,6 +25,14 @@ public interface CommonService {
     @FormUrlEncoded
     @POST("api.php")
     Observable<HttpResult<User>> login(@FieldMap Map<String, Object> params);
+    /**
+     * 刷新登录状态
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api.php")
+    Observable<HttpResult<String>> commonString(@FieldMap Map<String, Object> params);
 
 
 }

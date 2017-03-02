@@ -46,6 +46,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.views.ImageActivity" android:screenOrientation="portrait" />
+        <activity android:name=".module.common.ui.activity.WebViewActivity" android:screenOrientation="portrait" />
         <activity android:name=".module.common.ui.activity.LoginActivity" android:screenOrientation="portrait" />
         <activity android:name=".module.common.ui.activity.MainActivity" android:screenOrientation="portrait" />
         <activity android:name=".module.visit.ui.activity.StoreVisitActivity" android:screenOrientation="portrait" />
