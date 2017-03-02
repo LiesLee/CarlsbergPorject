@@ -193,8 +193,10 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
         List<ScrollableBaseFragment> list = new ArrayList<>();
         list.add(new StorePictureFragment());
         StoreInfoShowFragment f1 = new StoreInfoShowFragment();
+        f1.setShowType(0);
         f1.setTitle("门店上座率情况");
         StoreInfoShowFragment f2 = new StoreInfoShowFragment();
+        f2.setShowType(1);
         f2.setTitle("促销员表现评分");
 
         Collections.addAll(list, f1, f2);
@@ -311,6 +313,10 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
             //viewpager数据
             StorePictureFragment f1 = (StorePictureFragment) adapter.getmFragments().get(0);
             f1.refreshPictures(data.getTask_photo());
+            StoreInfoShowFragment f2 = (StoreInfoShowFragment) adapter.getmFragments().get(1);
+            f2.refreshData(data.getTask_collect());
+            StoreInfoShowFragment f3 = (StoreInfoShowFragment) adapter.getmFragments().get(2);
+            f3.refreshData_2(data.getTask_score());
 
         }
     }
