@@ -135,7 +135,15 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
         tv_clock_off.setOnClickListener(this);
         tv_take_a_photo.setOnClickListener(this);
 
-        RefreshUtil.autoRefresh(pcfl_pull_to_refresh);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mPresenter!=null && pcfl_pull_to_refresh != null){
+            RefreshUtil.autoRefresh(pcfl_pull_to_refresh);
+        }
     }
 
     @Override
@@ -221,7 +229,11 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
                 break;
 
             case R.id.tv_data_collect :
-                startActivity(new Intent(baseActivity, DataAddActivity.class));
+                Intent intentD = new Intent(baseActivity, DataAddActivity.class);
+                intentD.putExtra("store_id", store_id);
+                intentD.putExtra("task_id", task_id);
+                intentD.putExtra("store_name", store_name);
+                startActivity(intentD);
                 break;
 
             case R.id.tv_clock_off :
@@ -326,6 +338,7 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
      */
     @Override
     public void taskSignSuccessed() {
+        showShortToast("操作成功");
         mPresenter.storeView(store_id, task_id);
     }
 }

@@ -78,9 +78,18 @@ public class MainFragment extends BaseFragment<MainFragmentPresenter> implements
         mAdapter.addHeaderView(header);
         rv_list.setAdapter(mAdapter);
 
-        RefreshUtil.autoRefresh(pcfl_pull_to_refresh);
+
 
         iv_more.setOnClickListener(this);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mPresenter != null && pcfl_pull_to_refresh != null){
+            RefreshUtil.autoRefresh(pcfl_pull_to_refresh);
+        }
     }
 
     @Override

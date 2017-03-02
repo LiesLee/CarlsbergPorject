@@ -1,6 +1,7 @@
 package com.carlsberg.app.http.service;
 
 import com.carlsberg.app.bean.home.HomeDataResponse;
+import com.carlsberg.app.bean.visit.CollectViewResponse;
 import com.carlsberg.app.bean.visit.VisitRespone;
 import com.carlsberg.app.bean.visit.VisitStoreResponse;
 import com.common.http.HttpResult;
@@ -33,6 +34,14 @@ public interface VisitService {
     @FormUrlEncoded
     @POST("api.php")
     Observable<HttpResult<VisitStoreResponse>> storeView(@FieldMap SortedMap<String, Object> storePlan);
+    /**
+     *
+     * @param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api.php")
+    Observable<HttpResult<CollectViewResponse>> collectView(@FieldMap SortedMap<String, Object> storePlan);
     /**
      * 打卡
      * @param storePlan

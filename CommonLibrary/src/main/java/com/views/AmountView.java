@@ -30,6 +30,7 @@ public class AmountView extends LinearLayout implements View.OnClickListener, Te
     private EditText etAmount;
     private Button btnDecrease;
     private Button btnIncrease;
+    private int minVal = 0; //最小值
 
     public AmountView(Context context) {
         this(context, null);
@@ -88,17 +89,21 @@ public class AmountView extends LinearLayout implements View.OnClickListener, Te
         this.goods_storage = goods_storage;
     }
 
+    public void setMinVal(int min){
+        minVal = min;
+    }
+
     @Override
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.btnDecrease) {
-            if (amount > 0) {
-                amount--;
+            if (amount > minVal) {
+                --amount;
                 etAmount.setText(amount + "");
             }
         } else if (i == R.id.btnIncrease) {
             if (amount < goods_storage) {
-                amount++;
+                ++amount;
                 etAmount.setText(amount + "");
             }
         }
@@ -123,7 +128,7 @@ public class AmountView extends LinearLayout implements View.OnClickListener, Te
     @Override
     public void afterTextChanged(Editable s) {
         if (s.toString().isEmpty()){
-            amount = 0;
+            amount = minVal;
             return;
         }
 

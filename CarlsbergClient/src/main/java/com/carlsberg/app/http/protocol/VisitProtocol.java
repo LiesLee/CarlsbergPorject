@@ -2,6 +2,9 @@ package com.carlsberg.app.http.protocol;
 
 import com.carlsberg.app.application.CarlsbergAppcation;
 import com.carlsberg.app.bean.common.User;
+import com.carlsberg.app.bean.visit.CollectViewResponse;
+import com.carlsberg.app.bean.visit.TaskCollect;
+import com.carlsberg.app.bean.visit.TaskScore;
 import com.carlsberg.app.bean.visit.VisitRespone;
 import com.carlsberg.app.bean.visit.VisitStoreResponse;
 import com.carlsberg.app.http.manager.RetrofitManager;
@@ -10,6 +13,7 @@ import com.common.http.HttpResult;
 import com.common.utils.MD5Util;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import rx.Observable;
@@ -52,6 +56,21 @@ public class VisitProtocol extends BaseProtocol {
         params.put("user_id", CarlsbergAppcation.getInstance().getUser().getUser_info().getUser_id());
         return RetrofitManager.getInstance(HostType.USER_HOST).getVisitService()
                 .storeView(createPatams(params, "storeView"))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()) //返回结果处理线程
+                .unsubscribeOn(Schedulers.io());
+    }
+    /**
+     * @param store_id
+     * @return
+     */
+    public static Observable<HttpResult<CollectViewResponse>> collectView(String store_id, String task_id){
+        Map<String, Object> params = new HashMap<>();
+        params.put("store_id", store_id);
+        params.put("task_id", task_id);
+        params.put("user_id", CarlsbergAppcation.getInstance().getUser().getUser_info().getUser_id());
+        return RetrofitManager.getInstance(HostType.USER_HOST).getVisitService()
+                .collectView(createPatams(params, "collectView"))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()) //返回结果处理线程
                 .unsubscribeOn(Schedulers.io());
@@ -100,6 +119,31 @@ public class VisitProtocol extends BaseProtocol {
         params.put("user_id", CarlsbergAppcation.getInstance().getUser().getUser_info().getUser_id());
         return RetrofitManager.getInstance(HostType.USER_HOST).getVisitService()
                 .taskSign(createPatams(params, "delPhoto"))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()) //返回结果处理线程
+                .unsubscribeOn(Schedulers.io());
+    }
+
+    public static Observable<HttpResult<String>> collectSave(String store_id, String task_id, List<TaskCollect> taskCollects, List<TaskCollect> taskScores) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("store_id", store_id);
+        params.put("task_id", task_id);
+        params.put("user_id", CarlsbergAppcation.getInstance().getUser().getUser_info().getUser_id());
+
+        if(taskCollects!=null){
+            for(TaskCollect taskCollect : taskCollects){
+                params.put(taskCollect.getId_name(), taskCollect.getVal() == null ? "" : taskCollect.getVal());
+            }
+        }
+
+        if(taskScores != null){
+            for (TaskCollect taskScore : taskScores){
+                params.put(taskScore.getId_name(), taskScore.getVal() == null ? "" : taskScore.getVal());
+            }
+        }
+
+        return RetrofitManager.getInstance(HostType.USER_HOST).getVisitService()
+                .taskSign(createPatams(params, "collectSave"))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()) //返回结果处理线程
                 .unsubscribeOn(Schedulers.io());

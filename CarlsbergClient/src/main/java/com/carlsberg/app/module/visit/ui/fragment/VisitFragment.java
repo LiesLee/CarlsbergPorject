@@ -98,6 +98,7 @@ public class VisitFragment extends BaseFragment<VisitFragmentPresenter> implemen
         Collections.addAll(list, c1, c2);
         mAdapter.setFragments(list);
         viewPager.setAdapter(mAdapter);
+        viewPager.setOffscreenPageLimit(mAdapter.getCount());
         tabLayout.setupWithViewPager(viewPager);
 
         tv_area.setOnClickListener(this);

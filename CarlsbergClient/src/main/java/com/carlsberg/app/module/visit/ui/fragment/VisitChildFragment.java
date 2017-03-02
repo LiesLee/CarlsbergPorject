@@ -73,12 +73,19 @@ public class VisitChildFragment extends BaseFragment<TodayVisitPresenter> implem
         mAdapter = new LatelyVisitedAdapter(baseActivity, null);
         rv_list.setAdapter(mAdapter);
 
-        RefreshUtil.autoRefresh(pcfl_pull_to_refresh);
     }
 
     @Override
     public void initData() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mPresenter != null && pcfl_pull_to_refresh != null){
+            RefreshUtil.autoRefresh(pcfl_pull_to_refresh);
+        }
     }
 
 

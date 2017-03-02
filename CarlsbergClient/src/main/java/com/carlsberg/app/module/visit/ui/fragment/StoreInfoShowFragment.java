@@ -26,7 +26,7 @@ import ru.noties.scrollable.OnFlingOverListener;
  * Created by LiesLee on 2017/2/18.
  */
 @ActivityFragmentInject(contentViewId = R.layout.fra_store_info_show)
-public class StoreInfoShowFragment extends ScrollableBaseFragment<BasePresenterImpl>{
+public class StoreInfoShowFragment extends ScrollableBaseFragment<BasePresenterImpl> {
     @Bind(R.id.linear_list_view)
     LinearListView linear_list_view;
     @Bind(R.id.scroll_view)
@@ -42,10 +42,10 @@ public class StoreInfoShowFragment extends ScrollableBaseFragment<BasePresenterI
 
     @Override
     protected void initView(View fragmentRootView) {
-        if(showType == 0){
+        if (showType == 0) {
             adapter = new DataListAdapter(baseActivity);
             linear_list_view.setAdapter(adapter);
-        }else{
+        } else {
             adapter_2 = new DataListAdapter_2(baseActivity);
             linear_list_view.setAdapter(adapter_2);
         }
@@ -55,12 +55,12 @@ public class StoreInfoShowFragment extends ScrollableBaseFragment<BasePresenterI
     @Override
     public void initData() {
 
-        if(showType == 0){
-            if(data!=null){
+        if (showType == 0) {
+            if (data != null) {
                 refreshData(data);
             }
-        }else{
-            if(data_2!=null){
+        } else {
+            if (data_2 != null) {
                 refreshData_2(data_2);
             }
         }
@@ -88,19 +88,25 @@ public class StoreInfoShowFragment extends ScrollableBaseFragment<BasePresenterI
         this.title = title;
     }
 
-    public void refreshData(List<TaskCollect> data){
+    public void refreshData(List<TaskCollect> data) {
         this.data = data;
-        if(adapter!=null){
+        if (adapter != null) {
             adapter.setData(data);
-            linear_list_view.setAdapter(adapter);
+            if (linear_list_view != null) {
+                linear_list_view.setAdapter(adapter);
+            }
         }
 
     }
-    public void refreshData_2(List<TaskScore> data2){
+
+    public void refreshData_2(List<TaskScore> data2) {
         this.data_2 = data2;
-        if(adapter_2!=null){
+        if (adapter_2 != null) {
             adapter_2.setData(data2);
-            linear_list_view.setAdapter(adapter_2);
+            if (linear_list_view != null) {
+                linear_list_view.setAdapter(adapter_2);
+            }
+
         }
 
     }

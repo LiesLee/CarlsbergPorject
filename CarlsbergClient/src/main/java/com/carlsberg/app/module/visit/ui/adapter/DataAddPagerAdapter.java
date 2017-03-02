@@ -31,4 +31,8 @@ public class DataAddPagerAdapter extends FragmentPagerAdapterExt {
     public CharSequence getPageTitle(int position) {
         return mFragments.get(position).getTitle();
     }
+
+    public List<DataAddShowFragment> getmFragments() {
+        return mFragments;
+    }
 }
