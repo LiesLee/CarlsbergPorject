@@ -1,5 +1,6 @@
 package com.carlsberg.app.module.visit.ui.activity;
 
+import android.app.Dialog;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import com.carlsberg.app.module.visit.persenter.StoreVisitPresenter;
 import com.carlsberg.app.module.visit.ui.adapter.DataAddPagerAdapter;
 import com.carlsberg.app.module.visit.ui.fragment.DataAddShowFragment;
 import com.carlsberg.app.module.visit.view.DataAddView;
+import com.carlsberg.app.utils.DialogHelper;
 import com.common.annotation.ActivityFragmentInject;
 import com.common.base.presenter.BasePresenterImpl;
 import com.common.base.ui.BaseActivity;
@@ -84,14 +86,22 @@ public class DataAddActivity extends BaseActivity<DataAddPresenter> implements D
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_save :
-                if(addPagerAdapter!=null){
-                    DataAddShowFragment f1 = addPagerAdapter.getmFragments().get(0);
-                    DataAddShowFragment f2 = addPagerAdapter.getmFragments().get(1);
 
-                    if(f1!=null && f2!=null){
-                        mPresenter.collectSave(store_id, task_id, f1.getmAdapter().getData(), f2.getmAdapter().getData());
+                DialogHelper.show2btnDialog(baseActivity, "你确定要保存吗？", "取消", "确定", false, null, new DialogHelper.DialogOnclickCallback() {
+                    @Override
+                    public void onButtonClick(Dialog dialog) {
+                        if(addPagerAdapter!=null){
+                            DataAddShowFragment f1 = addPagerAdapter.getmFragments().get(0);
+                            DataAddShowFragment f2 = addPagerAdapter.getmFragments().get(1);
+
+                            if(f1!=null && f2!=null){
+                                mPresenter.collectSave(store_id, task_id, f1.getmAdapter().getData(), f2.getmAdapter().getData());
+                            }
+                        }
                     }
-                }
+                });
+
+
                 break;
 
             default:
