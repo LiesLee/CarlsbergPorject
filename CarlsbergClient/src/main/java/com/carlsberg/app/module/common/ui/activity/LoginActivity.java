@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.carlsberg.app.R;
 import com.carlsberg.app.bean.common.User;
+import com.carlsberg.app.http.HttpConstants;
 import com.carlsberg.app.module.my.persenter.LoginPersenter;
 import com.carlsberg.app.module.my.view.LoginView;
 import com.carlsberg.app.utils.UIHelper;
@@ -70,7 +71,9 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements Login
                 show(isShow);
                 break;
             case R.id.tv_forgot :
-
+                Intent intentWeb = new Intent(baseActivity, WebViewActivity.class);
+                intentWeb.putExtra("url", HttpConstants.getCustomerBaseUrl() + "h5.php?a=findPwd");
+                startActivity(intentWeb);
                 break;
             case R.id.tv_login :
                     if(check()){

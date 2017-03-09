@@ -118,7 +118,7 @@ public class VisitChildFragment extends BaseFragment<TodayVisitPresenter> implem
     public void loadListSeccessed(VisitRespone data) {
         if(pageNumber == 1){
             mAdapter.setData(data.getLists());
-            if(data.getLists() != null && data.getLists().size() >0){
+            if(data.getLists() != null && data.getLists().size() > 5){
                 mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
                     @Override
                     public void onLoadMoreRequested() {

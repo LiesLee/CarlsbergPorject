@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.carlsberg.app.R;
@@ -18,6 +19,7 @@ import com.carlsberg.app.module.common.ui.activity.MainActivity;
 import com.carlsberg.app.module.home.persenter.MainFragmentPresenter;
 import com.carlsberg.app.module.home.ui.adapter.LatelyVisitedAdapter;
 import com.carlsberg.app.module.home.view.MainFragmentView;
+import com.carlsberg.app.module.my.ui.activity.ModifyInfoActivity;
 import com.carlsberg.app.module.visit.ui.activity.StoreVisitActivity;
 import com.common.annotation.ActivityFragmentInject;
 import com.common.base.presenter.BasePresenterImpl;
@@ -49,6 +51,8 @@ public class MainFragment extends BaseFragment<MainFragmentPresenter> implements
     LinearLayoutManager mLinearLayoutManager;
     LatelyVisitedAdapter mAdapter;
 
+    LinearLayout ll_modify_info;
+
     @Override
     protected void initView(View fragmentRootView) {
         mPresenter = new MainFragmentPresenter(this);
@@ -69,7 +73,7 @@ public class MainFragment extends BaseFragment<MainFragmentPresenter> implements
         iv_more = (ImageView) header.findViewById(R.id.iv_more);
         tv_name = (TextView) header.findViewById(R.id.tv_name);
         tv_type = (TextView) header.findViewById(R.id.tv_type);
-
+        ll_modify_info = (LinearLayout) header.findViewById(R.id.ll_modify_info);
 
         mLinearLayoutManager = new LinearLayoutManager(baseActivity);
         rv_list.setLayoutManager(mLinearLayoutManager);
@@ -79,7 +83,7 @@ public class MainFragment extends BaseFragment<MainFragmentPresenter> implements
         rv_list.setAdapter(mAdapter);
 
 
-
+        ll_modify_info.setOnClickListener(this);
         iv_more.setOnClickListener(this);
     }
 
@@ -113,6 +117,11 @@ public class MainFragment extends BaseFragment<MainFragmentPresenter> implements
         switch (view.getId()) {
             case R.id.iv_more :
                 ((MainActivity)baseActivity).showMore();
+                break;
+
+            case R.id.ll_modify_info :
+                Intent intentU = new Intent(baseActivity, ModifyInfoActivity.class);
+                startActivityForResult(intentU, 999);
                 break;
 
             default:

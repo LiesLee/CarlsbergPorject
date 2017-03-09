@@ -1,5 +1,6 @@
 package com.carlsberg.app.module.visit.ui.adapter;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 
 import com.carlsberg.app.R;
 import com.carlsberg.app.bean.visit.PhotoListBean;
+import com.carlsberg.app.utils.DialogHelper;
 import com.carlsberg.app.utils.GlideUtil;
 import com.carlsberg.app.utils.UIHelper;
 import com.common.base.ui.BaseActivity;
@@ -56,7 +58,12 @@ public class PublishDynamicImgsAdapter extends RecyclerView.Adapter<PublishDynam
             holder.iv_remove_imgs.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    callBack.onImgDelete(holder.getAdapterPosition(), PublishDynamicImgsAdapter.this);
+                    DialogHelper.show2btnDialog(baseActivity, "是否删除？", "取消", "确定", false, null, new DialogHelper.DialogOnclickCallback() {
+                        @Override
+                        public void onButtonClick(Dialog dialog) {
+                            callBack.onImgDelete(holder.getAdapterPosition(), PublishDynamicImgsAdapter.this);
+                        }
+                    });
                 }
             });
 

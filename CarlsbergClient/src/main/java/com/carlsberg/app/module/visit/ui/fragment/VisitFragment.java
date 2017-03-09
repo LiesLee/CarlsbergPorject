@@ -155,6 +155,17 @@ public class VisitFragment extends BaseFragment<VisitFragmentPresenter> implemen
                             mAdapter.getFragments().get(viewPager.getCurrentItem()).setStatus_type(statusType.getStatus_type());
                             mAdapter.getFragments().get(viewPager.getCurrentItem()).setStatus_name(statusType.getStatus_title());
                             tv_area.setText(statusType.getStatus_title());
+
+                            et_search.clearFocus();
+                            String str = et_search.getText().toString();
+
+                            if(mAdapter==null || mAdapter.getFragments() == null || mAdapter.getFragments().size() == 0){
+                                return;
+                            }
+                            mAdapter.getFragments().get(viewPager.getCurrentItem()).setSearch_text(str);
+
+                            mAdapter.getFragments().get(viewPager.getCurrentItem()).load();
+
                         }
                     }, typeList);
                     popup.showAsDropDown(tv_area);
