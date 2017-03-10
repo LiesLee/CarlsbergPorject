@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.carlsberg.app.R;
 import com.carlsberg.app.bean.visit.VisitRespone;
@@ -37,6 +38,10 @@ public class VisitChildFragment extends BaseFragment<TodayVisitPresenter> implem
     PtrClassicFrameLayout pcfl_pull_to_refresh;
     @Bind(R.id.rv_list)
     RecyclerView rv_list;
+
+    @Bind(R.id.ll_empty_tips)
+    LinearLayout ll_empty_tips;
+
     private Handler handler;
     private LinearLayoutManager mLinearLayoutManager;
     private LatelyVisitedAdapter mAdapter;
@@ -132,6 +137,8 @@ public class VisitChildFragment extends BaseFragment<TodayVisitPresenter> implem
                     }
                 });
             }
+
+            ll_empty_tips.setVisibility(mAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
 
             if(data.getStatus_type()!=null){
                 typeList = data.getStatus_type();

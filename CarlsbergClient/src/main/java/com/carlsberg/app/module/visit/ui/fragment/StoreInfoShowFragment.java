@@ -1,6 +1,7 @@
 package com.carlsberg.app.module.visit.ui.fragment;
 
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.carlsberg.app.R;
@@ -31,6 +32,8 @@ public class StoreInfoShowFragment extends ScrollableBaseFragment<BasePresenterI
     LinearListView linear_list_view;
     @Bind(R.id.scroll_view)
     ScrollView scroll_view;
+    @Bind(R.id.ll_empty_tips)
+    LinearLayout ll_empty_tips;
 
     List<TaskCollect> data = new ArrayList<>();
     List<TaskScore> data_2 = new ArrayList<>();
@@ -95,6 +98,8 @@ public class StoreInfoShowFragment extends ScrollableBaseFragment<BasePresenterI
             if (linear_list_view != null) {
                 linear_list_view.setAdapter(adapter);
             }
+
+            if(ll_empty_tips != null) ll_empty_tips.setVisibility(adapter.getCount() > 0 ? View.GONE : View.VISIBLE);
         }
 
     }
@@ -106,6 +111,7 @@ public class StoreInfoShowFragment extends ScrollableBaseFragment<BasePresenterI
             if (linear_list_view != null) {
                 linear_list_view.setAdapter(adapter_2);
             }
+            if(ll_empty_tips != null) ll_empty_tips.setVisibility(adapter_2.getCount() > 0 ? View.GONE : View.VISIBLE);
 
         }
 

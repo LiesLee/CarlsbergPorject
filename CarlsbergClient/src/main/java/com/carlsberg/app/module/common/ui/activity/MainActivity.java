@@ -153,6 +153,20 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
 
     }
+    public void showTodayVisit(){
+
+        if(vp_main != null){
+            if(rg_main != null){
+                rg_main.check(R.id.rb_find);
+            }
+
+            if(visitFragment != null){
+                visitFragment.currentPage(0);
+            }
+        }
+
+
+    }
 
     @Override
     public void quickLoginSuccess() {

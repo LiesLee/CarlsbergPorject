@@ -70,7 +70,6 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
     TextView tv_status;
 
 
-
     @Bind(R.id.tv_sign_in)
     TextView tv_sign_in;
     @Bind(R.id.tv_data_collect)
@@ -106,7 +105,7 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
         store_id = getIntent().getStringExtra("store_id");
         task_id = getIntent().getStringExtra("task_id");
         store_name = getIntent().getStringExtra("store_name");
-        if(TextUtils.isEmpty(store_id) || TextUtils.isEmpty(task_id)){
+        if (TextUtils.isEmpty(store_id) || TextUtils.isEmpty(task_id)) {
             finish();
             ToastUtil.showShortToast(baseActivity, "ID数据为空");
             return;
@@ -141,7 +140,7 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
     @Override
     protected void onResume() {
         super.onResume();
-        if(mPresenter!=null && pcfl_pull_to_refresh != null){
+        if (mPresenter != null && pcfl_pull_to_refresh != null) {
             RefreshUtil.autoRefresh(pcfl_pull_to_refresh);
         }
     }
@@ -224,11 +223,11 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_sign_in :
+            case R.id.tv_sign_in:
                 mPresenter.taskSign(store_id, task_id, "checkin");
                 break;
 
-            case R.id.tv_data_collect :
+            case R.id.tv_data_collect:
                 Intent intentD = new Intent(baseActivity, DataAddActivity.class);
                 intentD.putExtra("store_id", store_id);
                 intentD.putExtra("task_id", task_id);
@@ -236,11 +235,11 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
                 startActivity(intentD);
                 break;
 
-            case R.id.tv_clock_off :
+            case R.id.tv_clock_off:
                 mPresenter.taskSign(store_id, task_id, "goaway");
                 break;
 
-            case R.id.tv_take_a_photo :
+            case R.id.tv_take_a_photo:
                 Intent intent = new Intent(baseActivity, UploadPicturesActivity.class);
                 intent.putExtra("store_id", store_id);
                 intent.putExtra("task_id", task_id);
@@ -265,17 +264,18 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
 
     @Override
     public void loadDataDone(VisitStoreResponse data) {
-        if(data!=null){
+        if (data != null) {
+            task_id = data.getStore_task().getTask_id() + "";
             //头部文字排版
             tv_name.setText(data.getStore_task().getStore_name());
             tv_type.setText(data.getStore_task().getFlag_plan_title());
             tv_status.setText(data.getStore_task().getTask_status_title());
 
-            if(data.getStore_task().getTask_status() == 0){
+            if (data.getStore_task().getTask_status() == 0) {
                 tv_status.setTextColor(getResources().getColor(R.color.blue));
-            }else if(data.getStore_task().getTask_status() == 1){
+            } else if (data.getStore_task().getTask_status() == 1) {
                 tv_status.setTextColor(getResources().getColor(R.color.green));
-            }else{
+            } else {
                 tv_status.setTextColor(getResources().getColor(R.color.red));
             }
             if (data.getStore_task().getFlag_plan() == 0) {
@@ -284,32 +284,32 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
                 tv_type.setBackgroundResource(R.color.red);
             }
 
-            tv_area.setText("所属区域："+data.getStore_task().getArea_title()+" - " +data.getStore_task().getRegion_title());
+            tv_area.setText("所属区域：" + data.getStore_task().getArea_title() + " - " + data.getStore_task().getRegion_title());
             tv_store_type.setText("门店性质：" + data.getStore_task().getType_title());
-            tv_nature.setText("门店类型：" +data.getStore_task().getNature_title());
+            tv_nature.setText("门店类型：" + data.getStore_task().getNature_title());
             tv_store_address.setText("门店地址：" + data.getStore_task().getStore_addr());
 
             tv_checkin_date.setText("入店时间：" + data.getStore_task().getCheckin_date());
             tv_goaway_date.setText("离店时间：" + data.getStore_task().getGoaway_date());
 
             //按钮适配
-            if(data.getTask_button()!=null && data.getTask_button().size() >0){
+            if (data.getTask_button() != null && data.getTask_button().size() > 0) {
                 ll_task_btn.setVisibility(View.VISIBLE);
-                for(VisitStoreResponse.TaskButton taskButton : data.getTask_button()){
+                for (VisitStoreResponse.TaskButton taskButton : data.getTask_button()) {
                     switch (taskButton.getButton_type()) {
-                        case "checkin" :
+                        case "checkin":
                             tv_sign_in.setVisibility(taskButton.getIs_open() == 0 ? View.GONE : View.VISIBLE);
                             tv_sign_in.setText(taskButton.getButton_title());
                             break;
-                        case "collect" :
+                        case "collect":
                             tv_data_collect.setVisibility(taskButton.getIs_open() == 0 ? View.GONE : View.VISIBLE);
                             tv_data_collect.setText(taskButton.getButton_title());
                             break;
-                        case "photo" :
+                        case "photo":
                             tv_take_a_photo.setVisibility(taskButton.getIs_open() == 0 ? View.GONE : View.VISIBLE);
                             tv_take_a_photo.setText(taskButton.getButton_title());
                             break;
-                        case "goaway" :
+                        case "goaway":
                             tv_clock_off.setVisibility(taskButton.getIs_open() == 0 ? View.GONE : View.VISIBLE);
                             tv_clock_off.setText(taskButton.getButton_title());
                             break;
@@ -318,7 +318,7 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
                             break;
                     }
                 }
-            }else{
+            } else {
                 ll_task_btn.setVisibility(View.GONE);
             }
 
@@ -329,6 +329,18 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
             f2.refreshData(data.getTask_collect());
             StoreInfoShowFragment f3 = (StoreInfoShowFragment) adapter.getmFragments().get(2);
             f3.refreshData_2(data.getTask_score());
+
+            if(data.getTask_photo() == null || data.getTask_collect() == null || data.getTask_score() == null) return;
+
+            if (data.getTask_photo().size() == 0) {
+                view_pager.setCurrentItem(0);
+            } else if (data.getTask_collect().size() == 0) {
+                view_pager.setCurrentItem(1);
+            } else if (data.getTask_score().size() == 0) {
+                view_pager.setCurrentItem(2);
+            } else {
+                view_pager.setCurrentItem(0);
+            }
 
         }
     }

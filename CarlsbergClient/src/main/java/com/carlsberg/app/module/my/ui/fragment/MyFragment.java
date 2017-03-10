@@ -11,6 +11,7 @@ import com.carlsberg.app.bean.common.User;
 import com.carlsberg.app.common.Constant;
 import com.carlsberg.app.http.HttpConstants;
 import com.carlsberg.app.module.common.ui.activity.LoginActivity;
+import com.carlsberg.app.module.common.ui.activity.MainActivity;
 import com.carlsberg.app.module.common.ui.activity.WebViewActivity;
 import com.carlsberg.app.module.my.ui.activity.ChangePasswordActivity;
 import com.carlsberg.app.module.my.ui.activity.ModifyInfoActivity;
@@ -50,6 +51,15 @@ public class MyFragment extends BaseFragment<MyPresenter> implements LoginView {
     @Bind(R.id.ll_modify_info)
     LinearLayout ll_modify_info;
 
+    @Bind(R.id.ll_modify_info_2)
+    LinearLayout ll_modify_info_2;
+
+    @Bind(R.id.ll_lately_visit)
+    LinearLayout ll_lately_visit;
+
+    @Bind(R.id.ll_today_visit)
+    LinearLayout ll_today_visit;
+
     @Override
     protected void initView(View fragmentRootView) {
         mPresenter = new MyPresenter(this);
@@ -65,6 +75,10 @@ public class MyFragment extends BaseFragment<MyPresenter> implements LoginView {
         ll_about_us.setOnClickListener(this);
         tv_exit.setOnClickListener(this);
         ll_modify_info.setOnClickListener(this);
+
+        ll_modify_info_2.setOnClickListener(this);
+        ll_lately_visit.setOnClickListener(this);
+        ll_today_visit.setOnClickListener(this);
     }
 
     @Override
@@ -111,6 +125,19 @@ public class MyFragment extends BaseFragment<MyPresenter> implements LoginView {
                 break;
             case R.id.tv_exit :
                 mPresenter.logout();
+                break;
+
+            case R.id.ll_modify_info_2 :
+                Intent intentUr = new Intent(baseActivity, ModifyInfoActivity.class);
+                startActivityForResult(intentUr, 999);
+                break;
+
+            case R.id.ll_lately_visit :
+                ((MainActivity)baseActivity).showMore();
+                break;
+
+            case R.id.ll_today_visit :
+                ((MainActivity)baseActivity).showTodayVisit();
                 break;
 
             default:

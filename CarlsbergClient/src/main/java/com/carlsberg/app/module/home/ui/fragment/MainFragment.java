@@ -41,6 +41,9 @@ public class MainFragment extends BaseFragment<MainFragmentPresenter> implements
     PtrClassicFrameLayout pcfl_pull_to_refresh;
     @Bind(R.id.rv_list)
     RecyclerView rv_list;
+    @Bind(R.id.ll_empty_tips)
+    LinearLayout ll_empty_tips;
+
 
     View header;
     ImageView iv_more;
@@ -135,6 +138,9 @@ public class MainFragment extends BaseFragment<MainFragmentPresenter> implements
         tv_type.setText(dataResponse.getUser_info().getRole_name());
         if(dataResponse.getRecent_plan()!=null && dataResponse.getRecent_plan().getLists()!=null && dataResponse.getRecent_plan().getLists().size() > 0){
             mAdapter.setData(dataResponse.getRecent_plan().getLists());
+            ll_empty_tips.setVisibility(View.GONE);
+        }else{
+            ll_empty_tips.setVisibility(View.VISIBLE);
         }
     }
 }

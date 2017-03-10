@@ -5,10 +5,40 @@
     android:layout_height="match_parent"
     android:id="@+id/scroll_view">
 
-    <ru.noties.scrollable.LinearListView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:id="@+id/linear_list_view"/>
+        android:layout_height="wrap_content">
+
+        <ru.noties.scrollable.LinearListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:id="@+id/linear_list_view"/>
+
+
+        <LinearLayout
+            android:id="@+id/ll_empty_tips"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="80dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="16dp"
+                android:text="暂无数据"
+                android:textColor="@color/grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
 
 </ScrollView>

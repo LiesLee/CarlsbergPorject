@@ -5,6 +5,7 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.carlsberg.app.R;
 import com.carlsberg.app.bean.visit.PhotoListBean;
@@ -34,6 +35,8 @@ public class StorePictureFragment extends ScrollableBaseFragment<BasePresenterIm
 
     @Bind(R.id.rv_list)
     RecyclerView rv_list;
+    @Bind(R.id.ll_empty_tips)
+    LinearLayout ll_empty_tips;
 
     Handler handler;
     LinearLayoutManager mLinearLayoutManager;
@@ -107,6 +110,8 @@ public class StorePictureFragment extends ScrollableBaseFragment<BasePresenterIm
         }else {
             storePicturesAdapter.setData(null);
         }
+
+        if(ll_empty_tips != null) ll_empty_tips.setVisibility(storePicturesAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
 
 
     }
