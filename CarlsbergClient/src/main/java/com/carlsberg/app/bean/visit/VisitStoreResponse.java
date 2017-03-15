@@ -16,11 +16,30 @@ public class VisitStoreResponse {
      * task_score : []
      */
 
+    private String store_id;
+    private String task_id;
+
     private StoreTask store_task;
     private List<TaskButton> task_button;
     private List<PhotoListBean> task_photo;
     private List<TaskCollect> task_collect;
     private List<TaskScore> task_score;
+
+    public String getStore_id() {
+        return store_id;
+    }
+
+    public void setStore_id(String store_id) {
+        this.store_id = store_id;
+    }
+
+    public String getTask_id() {
+        return task_id;
+    }
+
+    public void setTask_id(String task_id) {
+        this.task_id = task_id;
+    }
 
     public StoreTask getStore_task() {
         return store_task;

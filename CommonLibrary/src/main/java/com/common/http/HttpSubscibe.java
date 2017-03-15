@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.common.base.ui.BaseView;
 import com.common.callback.RequestCallback;
+import com.common.utils.FastJsonUtil;
 import com.common.utils.NetUtil;
 import com.socks.library.KLog;
 
@@ -85,6 +86,8 @@ public class HttpSubscibe {
                                         requestCallback.requestSuccess(t.getData());
                                     } else if(t.getStatus() == 207 || t.getStatus() == 202 || t.getStatus() == 208){
                                         requestCallback.requestError(0, null);
+                                    } else if(t.getStatus() == 307){ //特殊错误操作码
+                                        requestCallback.requestError(t.getStatus(), FastJsonUtil.t2Json2(t));
                                     }else{
                                         //请求错误回调
                                         requestCallback.requestError(t.getStatus(), t.getMsg());

@@ -35,7 +35,9 @@ public class StoreVisitPresenter extends BasePresenterImpl<StoreVisitView> {
                         if (code == 0) {
                             mView.hideProgress(Constant.PROGRESS_TYPE_LIST);
                             mView.toast("网络失败异常,请稍后再试");
-                        } else {
+                        } else if(code == 307){
+                            mView.loadError_307(msg);
+                        }else{
                             mView.toast(msg);
                         }
                     }

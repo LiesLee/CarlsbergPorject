@@ -1,5 +1,6 @@
 package com.carlsberg.app.module.visit.ui.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,12 +21,18 @@ import com.carlsberg.app.module.visit.ui.fragment.ScrollableBaseFragment;
 import com.carlsberg.app.module.visit.ui.fragment.StoreInfoShowFragment;
 import com.carlsberg.app.module.visit.ui.fragment.StorePictureFragment;
 import com.carlsberg.app.module.visit.view.StoreVisitView;
+import com.carlsberg.app.utils.DialogHelper;
 import com.common.annotation.ActivityFragmentInject;
 import com.common.base.presenter.BasePresenterImpl;
 import com.common.base.ui.BaseActivity;
 import com.common.base.ui.BaseView;
+import com.common.http.HttpResult;
+import com.common.utils.FastJsonUtil;
 import com.views.util.RefreshUtil;
 import com.views.util.ToastUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -266,6 +273,8 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
     public void loadDataDone(VisitStoreResponse data) {
         if (data != null) {
             task_id = data.getStore_task().getTask_id() + "";
+            store_name = data.getStore_task().getStore_name();
+            tv_title.setText(store_name);
             //头部文字排版
             tv_name.setText(data.getStore_task().getStore_name());
             tv_type.setText(data.getStore_task().getFlag_plan_title());
@@ -353,4 +362,48 @@ public class StoreVisitActivity extends BaseActivity<StoreVisitPresenter> implem
         showShortToast("操作成功");
         mPresenter.storeView(store_id, task_id);
     }
+
+    @Override
+    public void loadError_307(String errorJson) {
+        try {
+            JSONObject jsonObject = new JSONObject(errorJson);
+            if(jsonObject.has("msg") && jsonObject.has("data") && jsonObject.getJSONObject("data")!=null){
+                String msg = jsonObject.getString("msg");
+                JSONObject jEntity = jsonObject.getJSONObject("data");
+                final String store_id = jEntity.getString("store_id");
+                final String task_id = jEntity.getString("task_id");
+                if(!TextUtils.isEmpty(store_id) && !TextUtils.isEmpty(task_id)){
+                    DialogHelper.show2btnDialog(baseActivity, msg, "取消", "立即拜访", false, new DialogHelper.DialogOnclickCallback() {
+                        @Override
+                        public void onButtonClick(Dialog dialog) {
+                            finish();
+                        }
+                    }, new DialogHelper.DialogOnclickCallback() {
+                        @Override
+                        public void onButtonClick(Dialog dialog) {
+                            StoreVisitActivity.this.store_id = store_id;
+                            StoreVisitActivity.this.task_id = task_id;
+                            if (mPresenter != null && pcfl_pull_to_refresh != null) {
+                                RefreshUtil.autoRefresh(pcfl_pull_to_refresh);
+                            }
+
+                        }
+                    }).setCancelable(false);
+                }else{
+                    toast("307数据解析错误");
+                    finish();
+                }
+
+            }else{
+                toast("307数据解析错误");
+                finish();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            toast("307数据解析错误");
+            finish();
+        }
+    }
+
+
 }
