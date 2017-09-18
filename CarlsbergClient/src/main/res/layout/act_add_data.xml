@@ -33,6 +33,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="标题"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:maxWidth="240dp"
             android:textColor="@color/text_color_defalt"
             android:textSize="18dp" />
 
